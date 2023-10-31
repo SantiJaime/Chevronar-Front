@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 
-const ContactPage = () => {
+const Contactpage = () => {
   const [toggle, setToggle] = useState("banda");
 
   const toggleMap = (map) => setToggle(map);
@@ -76,4 +76,4 @@ const ContactPage = () => {
   );
 };
 
-export default ContactPage;
+export default Contactpage;
