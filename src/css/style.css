@@ -85,9 +85,9 @@ li {
   .displayNone {
     display: none;
   }
-  /* .marginNavbar {
+  .marginNavbar {
       margin-top: 16px;
-    } */
+    }
 }
 @media (max-width: 991px) {
     .margenLogo {
