@@ -1,9 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Carousel from "react-bootstrap/Carousel";
 import { Col, Container, Row } from "react-bootstrap";
 import CardComp from "../components/CardComp";
+import clientAxios from "../utils/axiosClient";
 
 const Homepage = () => {
+  const [productos, setProductos] = useState([]);
+
+  const getProducts = async () => {
+    const res = await clientAxios.get("/productos");
+    setProductos(res.data.allProds);
+  };
+
+  useEffect(() => {
+    getProducts();
+  }, []);
   return (
     <>
       <Carousel data-bs-theme="dark">
@@ -36,18 +47,13 @@ const Homepage = () => {
           />
         </Carousel.Item>
       </Carousel>
-      <Container fluid className="mb-5 text-white">
-        <hr className="text-white" />
+      <Container fluid className="my-5 text-white">
         <Row>
           <Col lg={12} md={12} sm={12}>
             <h3>Productos destacados</h3>
+            <hr />
             <Row>
-              <CardComp />
-              <CardComp />
-              <CardComp />
-              <CardComp />
-              <CardComp />
-              <CardComp />
+              <CardComp type={"prodsDestacados"} productos={productos} />
             </Row>
           </Col>
         </Row>

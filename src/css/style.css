@@ -73,6 +73,14 @@ li {
   height: 600px;
   width: 100%;
 }
+.widthBuscador{
+  width: 35%;
+}
+.card img {
+  width: 100%;
+  aspect-ratio: 6/5;
+  object-fit: contain; 
+}
 @media (min-width: 992px) {
   .displayNone {
     display: none;
@@ -92,4 +100,12 @@ li {
     .carr {
       height: 50%;
     }
+    .widthBuscador{
+      width: 50%;
+    }
   }
+@media (max-width: 767px){
+  .widthBuscador{
+    width: 75%;
+  }
+}

@@ -13,24 +13,22 @@ const FooterComp = () => {
                 <img
                   src="/logo2.png"
                   alt="Chevronar Logo"
-                  width="350px"
+                  width="280px"
                   className="img-fluid"
                 />
               </Link>
             </div>
           </Col>
           <hr className="displayNone" />
-          <Col lg={4} md={6} sm={12}>
-            <h5>Más información</h5>
-            <Link className="linkFooter" to={"/contact"}>
-              Contacto
-            </Link>
-            <hr className="my-2"/>
+          <Col lg={4} md={6} sm={12} className="d-flex align-items-center justify-content-center">
+            <div>
+            <h5>Nuestras sucursales</h5>
             <ul>
-              <h6>Nuestras sucursales:</h6>
               <li>Av. San Martín 112, Banda del Río Salí</li>
               <li>Av. Colón 315, San Miguel de Tucumán</li>
             </ul>
+
+            </div>
           </Col>
           <hr className="displayNone" />
           <Col lg={4} md={6} sm={12} className="d-flex align-items-center justify-content-center">

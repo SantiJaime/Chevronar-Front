@@ -1,20 +1,54 @@
 import React from "react";
 import { Col } from "react-bootstrap";
-import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
+import { Link } from "react-router-dom";
 
-const CardComp = () => {
+const CardComp = ({ type, productos }) => {
   return (
-    <Col lg={2} md={4} sm={6} xs={12} className="my-2">
-      <Card className="text-white fondo">
-        <Card.Img variant="top" src="https://http2.mlstatic.com/D_NQ_NP_807624-MLA42628348277_072020-O.webp" alt="Imagen producto"/>
-        <Card.Body>
-          <Card.Title>Kit distribución Corsa</Card.Title>
-          <hr />
-          <Button variant="outline-light">Ver más</Button>
-        </Card.Body>
-      </Card>
-    </Col>
+    <>
+      {type === "prod"
+        ? productos.map((prod) => (
+            <Col lg={3} md={4} sm={6} xs={12} key={prod._id} className="my-2">
+              <Card className="text-white fondo">
+                <Card.Img variant="top" src={prod.imagen} alt={prod.nombre} className="img-fluid"/>
+                <Card.Body>
+                  <Card.Title>${prod.precio}</Card.Title>
+                  <Card.Text>{prod.nombre}</Card.Text>
+                  <hr />
+                  <Link
+                    className="btn btn-outline-light"
+                    to={`/oneProd/${prod._id}`}
+                  >
+                    Ver más
+                  </Link>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))
+        : type === "prodsDestacados"
+        ? productos.map(
+            (prod) =>
+              prod.categoria === "Destacado" && (
+                <Col lg={3} md={6} sm={12} key={prod._id} className="my-2">
+                  <Card className="text-white fondo sombra">
+                    <Card.Img variant="top" src={prod.imagen} alt={prod.nombre} className="img-fluid" />
+                    <Card.Body>
+                      <Card.Title>${prod.precio}</Card.Title>
+                      <Card.Text>{prod.nombre}</Card.Text>
+                      <hr />
+                      <Link
+                        className="btn btn-outline-light"
+                        to={`/oneProd/${prod._id}`}
+                      >
+                        Ver más
+                      </Link>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              )
+          )
+        : ""}
+    </>
   );
 };
 

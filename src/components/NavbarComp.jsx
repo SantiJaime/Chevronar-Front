@@ -7,9 +7,8 @@ import { Link, NavLink } from "react-router-dom";
 const NavbarComp = () => {
   const [toggle, setToggle] = useState(false);
 
-  const handleToggleClick = () => {
-    setToggle(!toggle);
-  };
+  const handleToggleClick = () => setToggle(!toggle);
+
   return (
     <Navbar collapseOnSelect expand="lg" fixed="top">
       <Container fluid>
@@ -43,6 +42,9 @@ const NavbarComp = () => {
             </NavLink>
             <NavLink to="/products" className="whiteNavLink margenNavLinks">
               Productos
+            </NavLink>
+            <NavLink to="/contact" className="whiteNavLink margenNavLinks">
+              Contacto
             </NavLink>
           </Nav>
           <Nav className="ms-3">
