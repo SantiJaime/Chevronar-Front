@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 import Swal from "sweetalert2";
+import EditModalComp from "./EditModalComp";
 // import EditModalComp from "./EditModalComp";
 
 const TableComp = ({ type, productos, getProducts }) => {
@@ -57,11 +58,11 @@ const TableComp = ({ type, productos, getProducts }) => {
               <td>{prod.descripcion}</td>
               <td>{prod.imagen}</td>
               <td className="text-center">
-                {/* <EditModalComp
+                <EditModalComp
                   type={"prods"}
                   prod={prod}
                   getProducts={getProducts}
-                /> */}
+                />
                 <Button
                   variant="danger"
                   className="my-2 mx-2"

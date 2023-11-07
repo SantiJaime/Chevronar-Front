@@ -14,7 +14,7 @@ const Contact = () => {
             <hr />
             <div className="text-center">
               <p>Para consultas, a través de MD de Facebook o por Whatsapp:</p>
-              <a href="" target="_blank">
+              <a href="https://wa.me/message/AQZNUQA6TEJVJ1" target="_blank">
                 <i className="bi bi-whatsapp fs-1 wp"></i>
               </a>
               <p>O</p>

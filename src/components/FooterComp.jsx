@@ -42,7 +42,7 @@ const FooterComp = () => {
               >
                 <i className="bi bi-facebook fs-1 fb"></i>
               </a>
-              <a className="mx-3" href="">
+              <a className="mx-3" href="https://wa.me/message/AQZNUQA6TEJVJ1" target="_blank">
                 <i className="bi bi-whatsapp fs-1 wp"></i>
               </a>
             </div>
