@@ -7,10 +7,12 @@ import ProductsPage from "../pages/ProductsPage";
 import LoginPage from "../pages/LoginPage";
 import RegisterPage from "../pages/RegisterPage";
 import AdminPage from "../pages/AdminPage";
+import OneProductPage from "../pages/OneProductPage";
 
 const RoutesView = () => {
   return (
     <Routes>
+      <Route path="/product/:id" element={<OneProductPage/>}/>
       <Route path="/admin" element={<AdminPage/>}/>
       <Route path="/products" element={<ProductsPage/>}/>
       <Route path="/register" element={<RegisterPage/>}/>

@@ -17,7 +17,7 @@ const CardComp = ({ type, productos }) => {
                   <hr />
                   <Link
                     className="btn btn-outline-light"
-                    to={`/oneProd/${prod._id}`}
+                    to={`/product/${prod._id}`}
                   >
                     Ver más
                   </Link>
@@ -38,7 +38,7 @@ const CardComp = ({ type, productos }) => {
                       <hr />
                       <Link
                         className="btn btn-outline-light"
-                        to={`/oneProd/${prod._id}`}
+                        to={`/product/${prod._id}`}
                       >
                         Ver más
                       </Link>
