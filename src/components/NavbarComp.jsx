@@ -16,7 +16,7 @@ const NavbarComp = () => {
           <img
             src="/logo2.png"
             alt="Chevronar Logo"
-            width={"180px"}
+            width={"200px"}
             className="img-fluid"
           />
         </Link>
