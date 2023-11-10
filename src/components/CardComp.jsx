@@ -7,7 +7,8 @@ const CardComp = ({ type, productos }) => {
   return (
     <>
       {type === "prod"
-        ? productos.map((prod) => (
+        ? 
+        productos.length > 0 ? productos.map((prod) => (
             <Col lg={3} md={4} sm={6} xs={12} key={prod._id} className="my-2">
               <Card className="text-white fondo">
                 <Card.Img variant="top" src={prod.imagen} alt={prod.nombre} className="img-fluid"/>
@@ -25,6 +26,7 @@ const CardComp = ({ type, productos }) => {
               </Card>
             </Col>
           ))
+          : <h3 className="text-center mt-3">No existen resultados para su búsqueda</h3>
         : type === "prodsDestacados"
         ? productos.map(
             (prod) =>
