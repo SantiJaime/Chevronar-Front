@@ -11,7 +11,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import clientAxios, { config } from "../utils/axiosClient";
 import Swal from "sweetalert2";
-// import emailjs from "emailjs-com";
+import emailjs from "emailjs-com";
 
 const RegisterComp = ({ type }) => {
   const createUser = async (values) => {
@@ -27,13 +27,24 @@ const RegisterComp = ({ type }) => {
           config
         );
         if(res.status === 201){
+          console.log(res)
           Swal.fire({
             icon: "success",
             title: res.data.msg,
-            text: "Ya puedes iniciar sesión",
-            timer: 2000,
-            showConfirmButton: false,
+            text: "Debes verificar tu cuenta para iniciar sesión. Checkea tu correo electrónico",
           });
+          const templateParams = {
+            to_email: values.email,
+            message:
+              "Gracias por registrarte en nuestra página. Por favor, verifica tu correo electrónico clickeando en el siguiente enlace:",
+            token: res.data.token
+          };
+          await emailjs.send(
+            import.meta.env.VITE_EMAIL_SERVICE_ID,
+            import.meta.env.VITE_EMAIL_TEMPLATE_ID,
+            templateParams,
+            import.meta.env.VITE_EMAIL_PUBLIC_KEY
+          );
         }
       } else {
         Swal.fire({
