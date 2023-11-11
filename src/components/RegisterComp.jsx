@@ -26,26 +26,26 @@ const RegisterComp = ({ type }) => {
           },
           config
         );
-        if(res.status === 201){
-          console.log(res)
-          Swal.fire({
-            icon: "success",
-            title: res.data.msg,
-            text: "Debes verificar tu cuenta para iniciar sesión. Checkea tu correo electrónico",
-          });
-          const templateParams = {
-            to_email: values.email,
-            message:
-              "Gracias por registrarte en nuestra página. Por favor, verifica tu correo electrónico clickeando en el siguiente enlace:",
-            token: res.data.token
-          };
-          await emailjs.send(
-            import.meta.env.VITE_EMAIL_SERVICE_ID,
-            import.meta.env.VITE_EMAIL_TEMPLATE_ID,
-            templateParams,
-            import.meta.env.VITE_EMAIL_PUBLIC_KEY
-          );
-        }
+        console.log(res)
+        // if(res.status === 201){
+        //   Swal.fire({
+        //     icon: "success",
+        //     title: res.data.msg,
+        //     text: "Debes verificar tu cuenta para iniciar sesión. Checkea tu correo electrónico",
+        //   });
+        //   const templateParams = {
+        //     to_email: values.email,
+        //     message:
+        //       "Gracias por registrarte en nuestra página. Por favor, verifica tu correo electrónico clickeando en el siguiente enlace:",
+        //     token: res?.data?.token
+        //   };
+        //   await emailjs.send(
+        //     import.meta.env.VITE_EMAIL_SERVICE_ID,
+        //     import.meta.env.VITE_EMAIL_TEMPLATE_ID,
+        //     templateParams,
+        //     import.meta.env.VITE_EMAIL_PUBLIC_KEY
+        //   );
+        // }
       } else {
         Swal.fire({
           icon: "error",
