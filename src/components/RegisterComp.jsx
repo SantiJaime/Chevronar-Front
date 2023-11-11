@@ -56,6 +56,7 @@ const RegisterComp = ({ type }) => {
         });
       }
     } catch (error) {
+      console.log(error)
       Swal.fire({
         icon: "error",
         title: error.response.data.msg,
