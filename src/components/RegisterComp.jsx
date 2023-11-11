@@ -59,6 +59,7 @@ const RegisterComp = ({ type }) => {
       Swal.fire({
         icon: "error",
         title: error.response.data.msg,
+        text: error.response.data.error,
         timer: 2000,
         showConfirmButton: false,
       });
