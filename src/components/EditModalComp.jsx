@@ -12,12 +12,11 @@ const EditModalComp = ({ type, prod, getProducts }) => {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  
+
   const token = JSON.parse(sessionStorage.getItem("token"));
 
   const editProduct = async (values, idProd) => {
     try {
-      console.log(values);
       const response = await fetch(
         `${import.meta.env.VITE_URL_DEPLOY}/productos/${idProd}`,
         {
