@@ -13,6 +13,8 @@ const CreateModelComp = ({ type, getProducts }) => {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  
+  const token = JSON.parse(sessionStorage.getItem("token"));
 
   const createProduct = async (values) => {
     try {
@@ -29,7 +31,7 @@ const CreateModelComp = ({ type, getProducts }) => {
           }),
           headers: {
             "Content-Type": "application/json",
-            // 'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${token}`
           },
         }
       );

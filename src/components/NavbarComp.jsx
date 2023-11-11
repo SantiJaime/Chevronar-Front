@@ -66,7 +66,7 @@ const NavbarComp = () => {
               </NavLink>
               <button
                 onClick={logOut}
-                className="whiteNavLink margenNavLinks bg-transparent border-0"
+                className="whiteNavLink margenNavLinks bg-transparent border-0 text-start p-0"
               >
                 <i className="bi bi-door-open-fill"></i> Cerrar sesión
               </button>
@@ -82,9 +82,6 @@ const NavbarComp = () => {
               <NavLink to="/products" className="whiteNavLink margenNavLinks">
                 Productos
               </NavLink>
-              <NavLink to="/contact" className="whiteNavLink margenNavLinks">
-                Contacto
-              </NavLink>
             </Nav>
             <Nav className="ms-3">
               <NavLink to="/login" className="whiteNavLink margenNavLinks">
@@ -92,7 +89,7 @@ const NavbarComp = () => {
               </NavLink>
               <button
                 onClick={logOut}
-                className="whiteNavLink margenNavLinks bg-transparent border-0"
+                className="whiteNavLink margenNavLinks bg-transparent border-0 text-start p-0"
               >
                 <i className="bi bi-door-open-fill"></i> Cerrar sesión
               </button>

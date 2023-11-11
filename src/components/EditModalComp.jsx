@@ -12,6 +12,8 @@ const EditModalComp = ({ type, prod, getProducts }) => {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  
+  const token = JSON.parse(sessionStorage.getItem("token"));
 
   const editProduct = async (values, idProd) => {
     try {
@@ -29,7 +31,7 @@ const EditModalComp = ({ type, prod, getProducts }) => {
           }),
           headers: {
             "Content-Type": "application/json",
-            // 'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${token}`
           },
         }
       );
@@ -43,6 +45,14 @@ const EditModalComp = ({ type, prod, getProducts }) => {
         });
         handleClose();
         getProducts();
+      }
+      else{
+        Swal.fire({
+          icon: "error",
+          title: res.msg,
+          timer: 1500,
+          showConfirmButton: false,
+        });
       }
     } catch (error) {
       Swal.fire({
