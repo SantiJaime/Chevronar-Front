@@ -36,7 +36,7 @@ const RegisterComp = ({ type }) => {
             to_email: values.email,
             message:
               "Gracias por registrarte en nuestra página. Por favor, verifica tu correo electrónico clickeando en el siguiente enlace:",
-            token: res?.data?.token
+            token: res.data.token
           };
           await emailjs.send(
             import.meta.env.VITE_EMAIL_SERVICE_ID,
