@@ -7,8 +7,9 @@ import InputGroup from "react-bootstrap/InputGroup";
 import { errorProdSchema } from "../utils/validationSchemas";
 // import RegisterComp from "./RegisterComp";
 import Swal from "sweetalert2";
+import RegisterComp from "./RegisterComp";
 
-const CreateModelComp = ({ type, getProducts }) => {
+const CreateModelComp = ({ type, getProducts, getUsers }) => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -223,9 +224,24 @@ const CreateModelComp = ({ type, getProducts }) => {
             </div>
           </Modal>
         </>
-      ) : (
-        ""
-      )}
+      ) : type === "user" ? (
+        <>
+        <Button variant="light" onClick={handleShow}>
+          Crear usuario
+        </Button>
+
+        <Modal show={show} onHide={handleClose}>
+          <div className="fondo text-white">
+            <Modal.Header closeButton>
+              <Modal.Title>Crea un nuevo usuario aquí</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <RegisterComp type={"admin"} getUsers={getUsers} handleClose={handleClose} />
+            </Modal.Body>
+          </div>
+        </Modal>
+      </>
+      ) : ""}
     </>
   );
 };

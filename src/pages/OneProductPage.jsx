@@ -37,7 +37,10 @@ const OneProductPage = () => {
           <hr />
           <p>{prod.descripcion}</p>
           <hr />
-          <div className="text-end">
+          <div className="d-flex justify-content-between">
+            <a href="" className="btn btn-outline-light fs-5">
+              ¿Tienes dudas? <i className="bi bi-whatsapp"></i>
+            </a>
             <Button variant="outline-light" className="fs-5">
               <i className="bi bi-cart-plus-fill me-2"></i> Añadir al carrito
             </Button>

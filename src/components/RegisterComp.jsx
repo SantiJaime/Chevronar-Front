@@ -3,8 +3,7 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import { Formik } from "formik";
 import {
-  //   errorEditUserSchema,
-  //   errorRegisterOnAdminSchema,
+  errorRegisterOnAdminSchema,
   errorRegisterSchema,
 } from "../utils/validationSchemas";
 import { Link } from "react-router-dom";
@@ -13,7 +12,7 @@ import clientAxios, { config } from "../utils/axiosClient";
 import Swal from "sweetalert2";
 import emailjs from "emailjs-com";
 
-const RegisterComp = ({ type }) => {
+const RegisterComp = ({ type, getUsers, handleClose }) => {
   const createUser = async (values) => {
     try {
       if (values.pass === values.repeatPass) {
@@ -26,7 +25,7 @@ const RegisterComp = ({ type }) => {
           },
           config
         );
-        if(res.status === 201){
+        if (res.status === 201) {
           Swal.fire({
             icon: "success",
             title: res.data.msg,
@@ -36,7 +35,7 @@ const RegisterComp = ({ type }) => {
             to_email: values.email,
             message:
               "Gracias por registrarte en nuestra página. Por favor, verifica tu correo electrónico clickeando en el siguiente enlace:",
-            token: res.data.token
+            token: res.data.token,
           };
           await emailjs.send(
             import.meta.env.VITE_EMAIL_SERVICE_ID,
@@ -63,7 +62,35 @@ const RegisterComp = ({ type }) => {
       });
     }
   };
-
+  const createUserOnAdmin = async (values) => {
+    try {
+      const res = await clientAxios.post("/usuarios", {
+        email: values.email,
+        name: values.name,
+        pass: values.pass,
+        role: values.role,
+      });
+      if (res.status === 201) {
+        Swal.fire({
+          icon: "success",
+          title: res.data.msg,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        getUsers();
+        handleClose();
+      }
+    } catch (error) {
+      console.log(error);
+      Swal.fire({
+        icon: "error",
+        title: "¡Al parecer hubo un error",
+        text: error.response.data.msg,
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    }
+  };
   return (
     <>
       {
@@ -174,134 +201,114 @@ const RegisterComp = ({ type }) => {
               </Form>
             )}
           </Formik>
+        ) : type === "admin" ? (
+          <Formik
+            initialValues={{
+              email: "",
+              name: "",
+              pass: "",
+              role: "",
+            }}
+            validationSchema={errorRegisterOnAdminSchema}
+            onSubmit={(values) => createUserOnAdmin(values)}
+          >
+            {({ values, errors, touched, handleChange, handleSubmit }) => (
+              <Form>
+                <Form.Group className="mb-3" controlId="emailId">
+                  <Form.Label>Correo electrónico</Form.Label>
+                  <InputGroup className="mb-3">
+                    <InputGroup.Text id="groupEmail">
+                      <i className="bi bi-envelope-at-fill"></i>
+                    </InputGroup.Text>
+                    <Form.Control
+                      placeholder="name@example.com"
+                      type="email"
+                      name="email"
+                      value={values.email}
+                      onChange={handleChange}
+                      className={errors.email && touched.email && "is-invalid"}
+                    />
+                  </InputGroup>
+                  <small className="text-danger">
+                    {errors.email && touched.email && errors.email}
+                  </small>
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="nameId">
+                  <Form.Label>Nombre y apellido</Form.Label>
+                  <InputGroup className="mb-3">
+                    <InputGroup.Text id="groupName">
+                      <i className="bi bi-person-circle"></i>
+                    </InputGroup.Text>
+                    <Form.Control
+                      placeholder="Ejemplo: Juan González"
+                      type="text"
+                      name="name"
+                      value={values.name}
+                      onChange={handleChange}
+                      className={errors.name && touched.name && "is-invalid"}
+                    />
+                  </InputGroup>
+                  <small className="text-danger">
+                    {errors.name && touched.name && errors.name}
+                  </small>
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="passId">
+                  <Form.Label>Contraseña</Form.Label>
+                  <InputGroup className="mb-3">
+                    <InputGroup.Text id="groupPass">
+                      <i className="bi bi-key-fill"></i>
+                    </InputGroup.Text>
+                    <Form.Control
+                      placeholder="***********"
+                      type="password"
+                      name="pass"
+                      value={values.pass}
+                      onChange={handleChange}
+                      className={errors.pass && touched.pass && "is-invalid"}
+                    />
+                  </InputGroup>
+                  <small className="text-danger">
+                    {errors.pass && touched.pass && errors.pass}
+                  </small>
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="roleId">
+                  <Form.Label>Rol</Form.Label>
+                  <InputGroup className="mb-3">
+                    <InputGroup.Text id="groupRole">
+                      <i className="bi bi-person-fill-gear"></i>
+                    </InputGroup.Text>
+                    <Form.Select
+                      name="role"
+                      value={values.role}
+                      onChange={handleChange}
+                      className={errors.role && touched.role && "is-invalid"}
+                    >
+                      <option>Rol no seleccionado</option>
+                      <option value="user">Usuario</option>
+                      <option value="admin">Administrador</option>
+                    </Form.Select>
+                  </InputGroup>
+                  <small className="text-danger">
+                    {errors.role && touched.role && errors.role}
+                  </small>
+                </Form.Group>
+                <hr />
+                <div className="text-end">
+                  <Button
+                    variant="outline-light"
+                    type="submit"
+                    onClick={handleSubmit}
+                  >
+                    Crear usuario
+                  </Button>
+                </div>
+              </Form>
+            )}
+          </Formik>
         ) : (
           ""
         )
-        //   ) : type === "admin" ? (
-        //     <Formik
-        //       initialValues={{
-        //         email: "",
-        //         name: "",
-        //         pass: "",
-        //         role: "",
-        //         tel: "",
-        //       }}
-        //       validationSchema={errorRegisterOnAdminSchema}
-        //       onSubmit={(values) => createUserOnAdmin(values)}
-        //     >
-        //       {({ values, errors, touched, handleChange, handleSubmit }) => (
-        //         <Form>
-        //           <Form.Group className="mb-3" controlId="emailId">
-        //             <Form.Label>Correo electrónico</Form.Label>
-        //             <InputGroup className="mb-3">
-        //               <InputGroup.Text id="groupEmail">
-        //                 <i className="bi bi-envelope-at-fill"></i>
-        //               </InputGroup.Text>
-        //               <Form.Control
-        //                 placeholder="name@example.com"
-        //                 type="email"
-        //                 name="email"
-        //                 value={values.email}
-        //                 onChange={handleChange}
-        //                 className={errors.email && touched.email && "is-invalid"}
-        //               />
-        //             </InputGroup>
-        //             <small className="text-danger">
-        //               {errors.email && touched.email && errors.email}
-        //             </small>
-        //           </Form.Group>
-        //           <Form.Group className="mb-3" controlId="nameId">
-        //             <Form.Label>Nombre y apellido</Form.Label>
-        //             <InputGroup className="mb-3">
-        //               <InputGroup.Text id="groupName">
-        //                 <i className="bi bi-person-circle"></i>
-        //               </InputGroup.Text>
-        //               <Form.Control
-        //                 placeholder="Ejemplo: Juan González"
-        //                 type="text"
-        //                 name="name"
-        //                 value={values.name}
-        //                 onChange={handleChange}
-        //                 className={errors.name && touched.name && "is-invalid"}
-        //               />
-        //             </InputGroup>
-        //             <small className="text-danger">
-        //               {errors.name && touched.name && errors.name}
-        //             </small>
-        //           </Form.Group>
-        //           <Form.Group className="mb-3" controlId="telId">
-        //             <Form.Label>Número de teléfono</Form.Label>
-        //             <InputGroup className="mb-3">
-        //               <InputGroup.Text id="groupTel">
-        //                 <i className="bi bi-telephone-fill"></i>
-        //               </InputGroup.Text>
-        //               <Form.Control
-        //                 placeholder="Formato: 000-0000000"
-        //                 type="number"
-        //                 name="tel"
-        //                 value={values.tel}
-        //                 onChange={handleChange}
-        //                 className={errors.tel && touched.tel && "is-invalid"}
-        //               />
-        //             </InputGroup>
-        //             <small className="text-danger">
-        //               {errors.tel && touched.tel && errors.tel}
-        //             </small>
-        //           </Form.Group>
-        //           <Form.Group className="mb-3" controlId="passId">
-        //             <Form.Label>Contraseña</Form.Label>
-        //             <InputGroup className="mb-3">
-        //               <InputGroup.Text id="groupPass">
-        //                 <i className="bi bi-key-fill"></i>
-        //               </InputGroup.Text>
-        //               <Form.Control
-        //                 placeholder="***********"
-        //                 type="password"
-        //                 name="pass"
-        //                 value={values.pass}
-        //                 onChange={handleChange}
-        //                 className={errors.pass && touched.pass && "is-invalid"}
-        //               />
-        //             </InputGroup>
-        //             <small className="text-danger">
-        //               {errors.pass && touched.pass && errors.pass}
-        //             </small>
-        //           </Form.Group>
-        //           <Form.Group className="mb-3" controlId="roleId">
-        //             <Form.Label>Rol</Form.Label>
-        //             <InputGroup className="mb-3">
-        //               <InputGroup.Text id="groupRole">
-        //                 <i className="bi bi-person-fill-gear"></i>
-        //               </InputGroup.Text>
-        //               <Form.Select
-        //                 name="role"
-        //                 value={values.role}
-        //                 onChange={handleChange}
-        //                 className={errors.role && touched.role && "is-invalid"}
-        //               >
-        //                 <option>Rol no seleccionado</option>
-        //                 <option value="user">Usuario</option>
-        //                 <option value="admin">Administrador</option>
-        //               </Form.Select>
-        //             </InputGroup>
-        //             <small className="text-danger">
-        //               {errors.role && touched.role && errors.role}
-        //             </small>
-        //           </Form.Group>
-        //           <hr />
-        //           <div className="text-end">
-        //             <button
-        //               className="btn botones"
-        //               type="submit"
-        //               onClick={handleSubmit}
-        //             >
-        //               Crear usuario
-        //             </button>
-        //           </div>
-        //         </Form>
-        //       )}
-        //     </Formik>
-        //   ) : type === "editUser" ? (
+        // type === "editUser" ? (
         //     <Formik
         //       initialValues={{
         //         name: user.name,

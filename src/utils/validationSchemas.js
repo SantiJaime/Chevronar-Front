@@ -17,3 +17,13 @@ export const errorProdSchema = yup.object().shape({
     img: yup.string().required("Campo URL de imagen obligatorio").url("Formato URL inválido"),
     cat: yup.string().required("Campo categoría obligatorio")
 })
+export const errorRegisterOnAdminSchema = yup.object().shape({
+    email: yup.string().email("Formato Email inválido").required("Campo correo electrónico obligatorio"),
+    name: yup.string().required("Campo nombre y apellido obligatorio"),
+    pass: yup.string().required("Campo contraseña obligatorio").min(8, "La contraseña debe ser de al menos 8 caracteres"),
+    role: yup.string().required("Campo rol del usuario obligatorio"),
+})
+export const errorEditUserSchema = yup.object().shape({
+    name: yup.string().required("Campo nombre y apellido obligatorio"),
+    role: yup.string().required("Campo rol del usuario obligatorio")
+})

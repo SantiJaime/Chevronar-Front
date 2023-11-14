@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 import EditModalComp from "./EditModalComp";
 // import EditModalComp from "./EditModalComp";
 
-const TableComp = ({ type, productos, getProducts }) => {
+const TableComp = ({ type, productos, getProducts, users, getUsers }) => {
   const token = JSON.parse(sessionStorage.getItem("token"));
 
   const deleteProd = (id) => {
@@ -49,6 +49,70 @@ const TableComp = ({ type, productos, getProducts }) => {
       }
     });
   };
+  const deleteUser = (id, role) => {
+    if (role === "admin") {
+      return Swal.fire({
+        icon: "error",
+        title: "No es posible eliminar un usuario administrador",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    }
+    Swal.fire({
+      title: "¿Estás seguro de borrar este usuario?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si",
+      cancelButtonText: "Cancelar",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const resUser = await fetch(
+            `${import.meta.env.VITE_URL_DEPLOY}/usuarios/${id}`,
+            {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          const responseUser = await resUser.json();
+          const { idCart } = responseUser.deletedUser;
+          const resCart = await fetch(
+            `${import.meta.env.VITE_URL_DEPLOY}/cart/${idCart}`,
+            {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          const responseCart = await resCart.json();
+          if (responseUser.status === 200 && responseCart.status === 200) {
+            Swal.fire({
+              title: "Usuario eliminado correctamente",
+              icon: "success",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            getUsers();
+          }
+        } catch (error) {
+          Swal.fire({
+            title: "No se pudo eliminar el usuario",
+            text: error,
+            icon: "error",
+            showConfirmButton: false,
+            timer: 2000,
+          });
+        }
+      }
+    });
+  };
   return (
     <>
       {type === "prods"
@@ -80,10 +144,10 @@ const TableComp = ({ type, productos, getProducts }) => {
             <tr key={user._id}>
               <td>{user._id}</td>
               <td>{user.name}</td>
-              <td>{user.phoneNumber}</td>
+              <td>{user.email}</td>
               <td>{user.role}</td>
               <td className="text-center">
-                {/* <EditModalComp type={"users"} getUsers={getUsers} user={user} /> */}
+                <EditModalComp type={"users"} getUsers={getUsers} user={user} />
                 <Button
                   variant="danger"
                   className="my-2 mx-2"

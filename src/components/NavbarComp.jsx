@@ -84,7 +84,7 @@ const NavbarComp = () => {
               </NavLink>
             </Nav>
             <Nav className="ms-3">
-              <NavLink to="/login" className="whiteNavLink margenNavLinks">
+              <NavLink to="/admin" className="whiteNavLink margenNavLinks">
                 <i className="bi bi-person-fill-gear"></i> Administrador
               </NavLink>
               <button

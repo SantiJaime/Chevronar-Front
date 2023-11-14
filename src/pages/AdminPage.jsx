@@ -10,7 +10,10 @@ import Form from "react-bootstrap/Form";
 const AdminPage = () => {
   const [productos, setProductos] = useState([]);
   const [productosAux, setProductosAux] = useState([]);
+  const [users, setUsers] = useState([])
   const [tableView, setTableView] = useState("prods");
+
+  const token = JSON.parse(sessionStorage.getItem("token"))
 
   const getProducts = async () => {
     const res = await clientAxios.get("/productos");
@@ -18,8 +21,20 @@ const AdminPage = () => {
     setProductosAux(res.data.allProds);
   };
 
+  const getUsers = async () => {
+    const response = await fetch(`${import.meta.env.VITE_URL_DEPLOY}/usuarios`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    const res = await response.json()
+    setUsers(res.allUsers)
+  }
+
   useEffect(() => {
-    getProducts();
+    getProducts(), getUsers();
   }, []);
 
   const buscador = (ev) => {
@@ -102,9 +117,9 @@ const AdminPage = () => {
         </>
       ) : (
         <>
-          <div className="mt-4 d-flex justify-content-between">
+          <div className="mt-4 d-flex justify-content-between text-white">
             <h3>Usuarios registrados</h3>
-            {/* <ModalComp type="user" getUsers={getUsers}/> */}
+            <CreateModelComp type="user" getUsers={getUsers}/>
           </div>
           <hr />
           <Table striped bordered hover responsive variant="dark">
@@ -112,12 +127,13 @@ const AdminPage = () => {
               <tr>
                 <th>ID</th>
                 <th>Nombre y apellido</th>
+                <th>Correo electrónico</th>
                 <th>Rol</th>
                 <th>Acciones</th>
               </tr>
             </thead>
             <tbody>
-              {/* <TableComp users={users} type="users" getUsers={getUsers} /> */}
+              <TableComp users={users} type="users" getUsers={getUsers} />
             </tbody>
           </Table>
         </>
