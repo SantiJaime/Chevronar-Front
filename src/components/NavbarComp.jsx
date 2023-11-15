@@ -61,7 +61,7 @@ const NavbarComp = () => {
               </NavLink>
             </Nav>
             <Nav className="ms-3">
-              <NavLink to="/login" className="whiteNavLink margenNavLinks">
+              <NavLink to="/cart" className="whiteNavLink margenNavLinks">
               <i className="bi bi-cart"></i> Mi carrito
               </NavLink>
               <button

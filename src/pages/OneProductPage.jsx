@@ -2,9 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import clientAxios from "../utils/axiosClient";
 import { Button, Col, Container, Row } from "react-bootstrap";
+import Swal from "sweetalert2";
 
 const OneProductPage = () => {
   const params = useParams();
+
+  const token = JSON.parse(sessionStorage.getItem("token"));
+  const idUser = JSON.parse(sessionStorage.getItem("idUser"));
 
   const [prod, setProd] = useState({});
 
@@ -12,9 +16,66 @@ const OneProductPage = () => {
     const res = await clientAxios.get(`/productos/${params.id}`);
     setProd(res.data.oneProd);
   };
+
+
+  const addCart = async (idProd) => {
+    try {
+      const resUser = await fetch(
+        `${import.meta.env.VITE_URL_DEPLOY}/usuarios/${idUser}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const responseUser = await resUser.json();
+      const { idCart } = responseUser.oneUser;
+
+      const resCart = await fetch(
+        `${import.meta.env.VITE_URL_DEPLOY}/carrito/${idCart}/${idProd}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const responseCart = await resCart.json();
+
+      if (responseCart.status === 200) {
+        Swal.fire({
+          icon: "success",
+          title: responseCart.msg,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+      else {
+        Swal.fire({
+          icon: "error",
+          title: "¡Al parecer hubo un error!",
+          text: responseCart.msg,
+          showConfirmButton: false,
+          timer: 2000,
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "¡Al parecer hubo un error!",
+        text: error,
+      });
+    }
+  };
+
   useEffect(() => {
     getProduct();
   }, []);
+
   return (
     <Container className="my-5 text-white">
       <Row>
@@ -33,7 +94,13 @@ const OneProductPage = () => {
         <Col lg={8} md={12} sm={12} className="my-3">
           <h3>{prod.nombre}</h3>
           <hr />
-          <h4>${prod.precio}</h4>
+          {token ? (
+            <h4>${prod.precio}</h4>
+          ) : (
+            <Link className="linkFooter fs-5" to={"/login"}>
+              Debes iniciar sesión para ver los precios
+            </Link>
+          )}
           <hr />
           <p>{prod.descripcion}</p>
           <hr />
@@ -41,23 +108,11 @@ const OneProductPage = () => {
             <a href="" className="btn btn-outline-light fs-5">
               ¿Tienes dudas? <i className="bi bi-whatsapp"></i>
             </a>
-            <Button variant="outline-light" className="fs-5">
-              <i className="bi bi-cart-plus-fill me-2"></i> Añadir al carrito
-            </Button>
-            {/* {token ? (
-              <button
-                onClick={() => addCart(prod._id)}
-                className="btn botones fs-5"
-              >
-                <i className="bi bi-cart-plus-fill me-2"></i>
-                Agregar al carrito
-              </button>
-            ) : (
-              <Link className="btn botones fs-5" to={"/login"}>
-                <i className="bi bi-cart-plus-fill me-2"></i>
-                Agregar al carrito
-              </Link>
-            )} */}
+            {token && (
+              <Button variant="outline-light" className="fs-5" onClick={() => addCart(prod._id)}>
+                <i className="bi bi-cart-plus-fill"></i> Añadir al carrito
+              </Button>
+            )}
           </div>
         </Col>
       </Row>

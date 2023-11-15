@@ -9,16 +9,33 @@ import RegisterPage from "../pages/RegisterPage";
 import AdminPage from "../pages/AdminPage";
 import OneProductPage from "../pages/OneProductPage";
 import ConfirmMailPage from "../pages/ConfirmMailPage";
+import PrivateRoutes from "../components/PrivateRoutes";
+import CartPage from "../pages/CartPage";
 
 const RoutesView = () => {
   return (
     <Routes>
-      <Route path="/confirm" element={<ConfirmMailPage/>}/>
-      <Route path="/product/:id" element={<OneProductPage/>}/>
-      <Route path="/admin" element={<AdminPage/>}/>
-      <Route path="/products" element={<ProductsPage/>}/>
-      <Route path="/register" element={<RegisterPage/>}/>
-      <Route path="/login" element={<LoginPage/>}/>
+      <Route
+        path="/cart"
+        element={
+          <PrivateRoutes role={"user"}>
+            <CartPage />
+          </PrivateRoutes>
+        }
+      />
+      <Route
+        path="/admin"
+        element={
+          <PrivateRoutes role={"admin"}>
+            <AdminPage />
+          </PrivateRoutes>
+        }
+      />
+      <Route path="/product/:id" element={<OneProductPage />} />
+      <Route path="/confirm" element={<ConfirmMailPage />} />
+      <Route path="/products" element={<ProductsPage />} />
+      <Route path="/register" element={<RegisterPage />} />
+      <Route path="/login" element={<LoginPage />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/" element={<Homepage />} />
       <Route path="*" element={<Errorpage />} />
