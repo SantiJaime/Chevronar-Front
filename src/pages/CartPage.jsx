@@ -211,7 +211,7 @@ const CartPage = () => {
         <Col sm={12}>
           <div className="d-flex justify-content-between">
             <h2>Mi carrito de compras</h2>
-            <Button variant="light" onClick={emptyCart}>
+            <Button variant="light" onClick={emptyCart} className={products.length === 0 && "d-none"}>
               <i className="bi bi-cart-x-fill"></i> Vaciar carrito
             </Button>
           </div>
