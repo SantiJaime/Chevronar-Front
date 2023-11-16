@@ -421,6 +421,7 @@ const CartPage = () => {
                             </tr>
                           </tbody>
                         </Table>
+                        <hr />
                         <div className="d-flex justify-content-around">
                           <Button variant="outline-light">
                             Pagar en 1 cuota
@@ -468,6 +469,7 @@ const CartPage = () => {
                             </tr>
                           </tbody>
                         </Table>
+                        <hr />
                         <div className="d-flex justify-content-around">
                           <Button variant="outline-light">
                             Pagar en 1 cuota
@@ -499,6 +501,7 @@ const CartPage = () => {
                             </tr>
                           </tbody>
                         </Table>
+                        <hr />
                         <Button variant="outline-light">
                           Pagar en 3 cuotas
                         </Button>
@@ -524,6 +527,7 @@ const CartPage = () => {
                             </tr>
                           </tbody>
                         </Table>
+                        <hr />
                         <Button variant="outline-light">
                           Pagar en 3 cuotas
                         </Button>
