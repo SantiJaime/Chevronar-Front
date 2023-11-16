@@ -81,6 +81,9 @@ li {
   aspect-ratio: 6/5;
   object-fit: contain; 
 }
+.error-message {
+  color: firebrick;
+}
 @media (min-width: 992px) {
   .displayNone {
     display: none;

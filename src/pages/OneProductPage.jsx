@@ -48,7 +48,7 @@ const OneProductPage = () => {
       if (responseCart.status === 200) {
         Swal.fire({
           icon: "success",
-          title: responseCart.msg,
+          title: "Producto agregado al carrito",
           showConfirmButton: false,
           timer: 1500,
         });

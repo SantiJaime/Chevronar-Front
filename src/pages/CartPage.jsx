@@ -3,11 +3,15 @@ import { Button, Col, Container, Row } from "react-bootstrap";
 import Table from "react-bootstrap/Table";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
+import { ErrorMessage, Formik } from "formik";
 
 const CartPage = () => {
   const [products, setProducts] = useState([]);
   const [precioTotalPorProducto, setPrecioTotalPorProducto] = useState([]);
   const [precioTotal, setPrecioTotal] = useState(0);
+  const [subtotal, setSubtotal] = useState(0);
 
   const token = JSON.parse(sessionStorage.getItem("token"));
   const idUser = JSON.parse(sessionStorage.getItem("idUser"));
@@ -88,6 +92,7 @@ const CartPage = () => {
     });
     setPrecioTotalPorProducto(precios);
     setPrecioTotal(total);
+    setSubtotal(total);
   }, [products]);
 
   const eliminarProd = async (idProd) => {
@@ -205,13 +210,40 @@ const CartPage = () => {
       }
     });
   };
+
+  const paymentMethod = (values) => {
+    const { metodo, tarjeta, cuotas } = values;
+
+    if (metodo === "Tarjeta de crédito") {
+      switch (tarjeta) {
+        case "Naranja":
+          if (cuotas === "1 pago") setPrecioTotal(subtotal * 1.1);
+          else if (cuotas === "Plan Z") setPrecioTotal(subtotal * 1.15);
+          else if (cuotas === "5 pagos") setPrecioTotal(subtotal * 1.2);
+          else if (cuotas === "6 pagos") setPrecioTotal(subtotal * 1.25);
+          break;
+        case "Visa":
+          if (cuotas === "1 pago") setPrecioTotal(subtotal * 1.15);
+          else if (cuotas === "3 pagos") setPrecioTotal(subtotal * 1.25);
+          else if (cuotas === "6 pagos") setPrecioTotal(subtotal * 1.35);
+          break;
+      }
+    } else {
+      setPrecioTotal(subtotal);
+      console.log(precioTotal);
+    }
+  };
   return (
     <Container className="my-5 text-white">
       <Row>
         <Col sm={12}>
           <div className="d-flex justify-content-between">
             <h2>Mi carrito de compras</h2>
-            <Button variant="light" onClick={emptyCart} className={products.length === 0 && "d-none"}>
+            <Button
+              variant="light"
+              onClick={emptyCart}
+              className={products.length === 0 && "d-none"}
+            >
               <i className="bi bi-cart-x-fill"></i> Vaciar carrito
             </Button>
           </div>
@@ -266,7 +298,250 @@ const CartPage = () => {
                 </tbody>
               </Table>
               <hr />
-              <h3>Total a pagar: ${precioTotal}</h3>
+              <h5 className="mt-3">Subtotal: ${subtotal}</h5>
+              <Formik
+                initialValues={{
+                  metodo: "Efectivo",
+                  tarjeta: "",
+                  cuotas: "",
+                }}
+                onSubmit={(values) => paymentMethod(values)}
+                validate={(values) => {
+                  const errors = {};
+
+                  if (
+                    values.metodo === "Tarjeta de crédito" &&
+                    !values.tarjeta
+                  ) {
+                    errors.tarjeta =
+                      "Por favor, seleccione una tarjeta de crédito";
+                  }
+                }}
+              >
+                {({ values, handleChange, handleSubmit }) => (
+                  <Form className="mt-3">
+                    <div className="d-flex">
+                      <Form.Group className="mb-3 me-2" controlId="methodId">
+                        <Form.Label>¿Como desea pagar?</Form.Label>
+                        <InputGroup className="mb-3">
+                          <InputGroup.Text id="groupMethod">
+                            <i className="bi bi-coin"></i>
+                          </InputGroup.Text>
+                          <Form.Select
+                            name="metodo"
+                            value={values.metodo}
+                            onChange={
+                              values.metodo === "Tarjeta de Crédito"
+                                ? handleChange
+                                : (ev) => {
+                                    handleChange(ev);
+                                    handleSubmit();
+                                  }
+                            }
+                          >
+                            <option value="Efectivo">Efectivo</option>
+                            <option value="Tarjeta de crédito">
+                              Tarjeta de crédito
+                            </option>
+                            <option value="Tarjeta de débito">
+                              Tarjeta de débito
+                            </option>
+                            <option value="Transferencia bancaria">
+                              Transferencia bancaria
+                            </option>
+                          </Form.Select>
+                        </InputGroup>
+                      </Form.Group>
+                      {values.metodo === "Tarjeta de crédito" && (
+                        <Form.Group className="mb-3 ms-2" controlId="cardId">
+                          <Form.Label>Seleccione su tarjeta</Form.Label>
+                          <InputGroup className="mb-3">
+                            <InputGroup.Text id="groupCard">
+                              <i className="bi bi-credit-card-fill"></i>
+                            </InputGroup.Text>
+                            <Form.Select
+                              name="tarjeta"
+                              value={values.tarjeta}
+                              onChange={handleChange}
+                            >
+                              <option value="">Sin tarjeta seleccionda</option>
+                              <option value="Naranja">Naranja</option>
+                              <option value="Visa">Visa</option>
+                              <option value="Mastercard">Mastercard</option>
+                              <option value="American Express">
+                                American Express
+                              </option>
+                              <option value="Cabal">Cabal</option>
+                              <option value="Sol">Sol</option>
+                              <option value="Credimas">Credimas</option>
+                              <option value="Sucredito">Sucredito</option>
+                              <option value="Titanio">Titanio</option>
+                            </Form.Select>
+                          </InputGroup>
+                          <ErrorMessage
+                            name="tarjeta"
+                            component="p"
+                            className="error-message"
+                          />
+                        </Form.Group>
+                      )}
+                    </div>
+
+                    {values.metodo === "Tarjeta de crédito" &&
+                    values.tarjeta === "Naranja" ? (
+                      <>
+                        <Table striped bordered hover responsive variant="dark">
+                          <thead>
+                            <tr>
+                              <th>Cantidad de cuotas</th>
+                              <th>Valor de la cuota</th>
+                              <th>Precio final</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>1 pago (10% de interés)</td>
+                              <td>${precioTotal * 1.1}</td>
+                              <td>${precioTotal * 1.1}</td>
+                            </tr>
+                            <tr>
+                              <td>Plan Z (15% de interés)</td>
+                              <td>${(precioTotal * 1.15) / 3}</td>
+                              <td>${precioTotal * 1.15}</td>
+                            </tr>
+                            <tr>
+                              <td>5 pagos (20% de interés)</td>
+                              <td>${(precioTotal * 1.2) / 5}</td>
+                              <td>${precioTotal * 1.2}</td>
+                            </tr>
+                            <tr>
+                              <td>6 pagos (25% de interés)</td>
+                              <td>${(precioTotal * 1.25) / 6}</td>
+                              <td>${precioTotal * 1.25}</td>
+                            </tr>
+                          </tbody>
+                        </Table>
+                        <div className="d-flex justify-content-around">
+                          <Button variant="outline-light">
+                            Pagar en 1 cuota
+                          </Button>
+                          <Button variant="outline-light">
+                            Pagar en Plan Z
+                          </Button>
+                          <Button variant="outline-light">
+                            Pagar en 5 cuotas
+                          </Button>
+                          <Button variant="outline-light">
+                            Pagar en 6 cuotas
+                          </Button>
+                        </div>
+                      </>
+                    ) : values.metodo === "Tarjeta de crédito" &&
+                      (values.tarjeta === "Visa" ||
+                        values.tarjeta === "Mastercard" ||
+                        values.tarjeta === "American Express" ||
+                        values.tarjeta === "Cabal") ? (
+                      <>
+                        <Table striped bordered hover responsive variant="dark">
+                          <thead>
+                            <tr>
+                              <th>Cantidad de cuotas</th>
+                              <th>Valor de la cuota</th>
+                              <th>Precio final</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>1 pago (15% de interés)</td>
+                              <td>${precioTotal * 1.15}</td>
+                              <td>${precioTotal * 1.15}</td>
+                            </tr>
+                            <tr>
+                              <td>3 pagos (25% de interés)</td>
+                              <td>${(precioTotal * 1.25) / 3}</td>
+                              <td>${precioTotal * 1.25}</td>
+                            </tr>
+                            <tr>
+                              <td>6 pagos (35% de interés)</td>
+                              <td>${(precioTotal * 1.35) / 6}</td>
+                              <td>${precioTotal * 1.35}</td>
+                            </tr>
+                          </tbody>
+                        </Table>
+                        <div className="d-flex justify-content-around">
+                          <Button variant="outline-light">
+                            Pagar en 1 cuota
+                          </Button>
+                          <Button variant="outline-light">
+                            Pagar en 3 cuotas
+                          </Button>
+                          <Button variant="outline-light">
+                            Pagar en 6 cuotas
+                          </Button>
+                        </div>
+                      </>
+                    ) : values.metodo === "Tarjeta de crédito" &&
+                      values.tarjeta === "Sol" ? (
+                      <>
+                        <Table striped bordered hover responsive variant="dark">
+                          <thead>
+                            <tr>
+                              <th>Cantidad de cuotas</th>
+                              <th>Valor de la cuota</th>
+                              <th>Precio final</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>3 pagos (35% de interés)</td>
+                              <td>${(precioTotal * 1.35) / 3}</td>
+                              <td>${precioTotal * 1.35}</td>
+                            </tr>
+                          </tbody>
+                        </Table>
+                        <Button variant="outline-light">
+                          Pagar en 3 cuotas
+                        </Button>
+                      </>
+                    ) : values.metodo === "Tarjeta de crédito" &&
+                      (values.tarjeta === "Credimas" ||
+                        values.tarjeta === "Sucredito" ||
+                        values.tarjeta === "Titanio") ? (
+                      <>
+                        <Table striped bordered hover responsive variant="dark">
+                          <thead>
+                            <tr>
+                              <th>Cantidad de cuotas</th>
+                              <th>Valor de la cuota</th>
+                              <th>Precio final</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>3 pagos (25% de interés)</td>
+                              <td>${(precioTotal * 1.25) / 3}</td>
+                              <td>${precioTotal * 1.25}</td>
+                            </tr>
+                          </tbody>
+                        </Table>
+                        <Button variant="outline-light">
+                          Pagar en 3 cuotas
+                        </Button>
+                      </>
+                    ) : values.metodo !== "Tarjeta de crédito" ? (
+                      <>
+                        <h3>Precio final ${subtotal}</h3>
+                        <hr />
+                        <Button variant="outline-light">
+                          Generar orden de compra
+                        </Button>
+                      </>
+                    ) : (
+                      ""
+                    )}
+                  </Form>
+                )}
+              </Formik>
             </>
           ) : (
             <>
