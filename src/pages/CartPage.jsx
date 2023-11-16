@@ -211,28 +211,6 @@ const CartPage = () => {
     });
   };
 
-  const paymentMethod = (values) => {
-    const { metodo, tarjeta, cuotas } = values;
-
-    if (metodo === "Tarjeta de crédito") {
-      switch (tarjeta) {
-        case "Naranja":
-          if (cuotas === "1 pago") setPrecioTotal(subtotal * 1.1);
-          else if (cuotas === "Plan Z") setPrecioTotal(subtotal * 1.15);
-          else if (cuotas === "5 pagos") setPrecioTotal(subtotal * 1.2);
-          else if (cuotas === "6 pagos") setPrecioTotal(subtotal * 1.25);
-          break;
-        case "Visa":
-          if (cuotas === "1 pago") setPrecioTotal(subtotal * 1.15);
-          else if (cuotas === "3 pagos") setPrecioTotal(subtotal * 1.25);
-          else if (cuotas === "6 pagos") setPrecioTotal(subtotal * 1.35);
-          break;
-      }
-    } else {
-      setPrecioTotal(subtotal);
-      console.log(precioTotal);
-    }
-  };
   return (
     <Container className="my-5 text-white">
       <Row>
@@ -306,17 +284,6 @@ const CartPage = () => {
                   cuotas: "",
                 }}
                 onSubmit={(values) => paymentMethod(values)}
-                validate={(values) => {
-                  const errors = {};
-
-                  if (
-                    values.metodo === "Tarjeta de crédito" &&
-                    !values.tarjeta
-                  ) {
-                    errors.tarjeta =
-                      "Por favor, seleccione una tarjeta de crédito";
-                  }
-                }}
               >
                 {({ values, handleChange, handleSubmit }) => (
                   <Form className="mt-3">
@@ -330,14 +297,7 @@ const CartPage = () => {
                           <Form.Select
                             name="metodo"
                             value={values.metodo}
-                            onChange={
-                              values.metodo === "Tarjeta de Crédito"
-                                ? handleChange
-                                : (ev) => {
-                                    handleChange(ev);
-                                    handleSubmit();
-                                  }
-                            }
+                            onChange={handleChange}
                           >
                             <option value="Efectivo">Efectivo</option>
                             <option value="Tarjeta de crédito">
