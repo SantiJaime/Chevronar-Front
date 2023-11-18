@@ -6,12 +6,15 @@ import Swal from "sweetalert2";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import { ErrorMessage, Formik } from "formik";
+import { jsPDF } from "jspdf";
+import "jspdf-autotable";
 
 const CartPage = () => {
   const [products, setProducts] = useState([]);
   const [precioTotalPorProducto, setPrecioTotalPorProducto] = useState([]);
   const [precioTotal, setPrecioTotal] = useState(0);
   const [subtotal, setSubtotal] = useState(0);
+  const [user, setUser] = useState({});
 
   const token = JSON.parse(sessionStorage.getItem("token"));
   const idUser = JSON.parse(sessionStorage.getItem("idUser"));
@@ -29,6 +32,7 @@ const CartPage = () => {
         }
       );
       const response = await resUser.json();
+      setUser(response.oneUser);
       const { idCart } = response.oneUser;
 
       const resCart = await fetch(
@@ -211,6 +215,60 @@ const CartPage = () => {
     });
   };
 
+  const generarOrdenCompra = (interes, metodo) => {
+    setPrecioTotal(subtotal * interes);
+    const doc = new jsPDF();
+
+    doc.text("Orden de compra", 20, 10);
+    doc.addImage("/logo2.png", "PNG", 110, 10, 100, 30);
+    doc.text(`Fecha: ${new Date().toString().split("GMT")[0]}`, 10, 20);
+    doc.text(`Cliente: ${user.name} | ${user.email}`, 10, 30);
+    doc.text(`Método de pago: ${metodo}`, 10, 40);
+    doc.setFontSize(11);
+    doc.text(
+      "Presenta esta orden de compra en nuestra sucursal principal para retirar tus productos. Tienes 24 horas ",
+      10,
+      50
+    );
+    doc.text(
+      "para hacerlo. Una vez pasado el tiempo, se cancelará tu pedido",
+      10,
+      60
+    );
+
+    const columns = ["Producto", "Cantidad", "Precio unitario", "Total"];
+    const data = products.map((prod) => [
+      `${prod.nombre}`,
+      `${prod.cantidad}`,
+      `$${prod.precio}`,
+      `$${precioTotalPorProducto[prod._id]}`,
+    ]);
+
+    doc.autoTable({
+      startY: 70,
+      head: [columns],
+      body: data,
+    });
+
+    const backgroundColor = "#3084bc";
+    doc.setFillColor(backgroundColor);
+    const text = `Precio total: $${precioTotal}`;
+    const textWidth = doc.getStringUnitWidth(text) * doc.internal.getFontSize();
+    const textHeight = doc.internal.getLineHeight();
+    const padding = 5;
+    const rectWidth = textWidth - 5;
+    const rectHeight = textHeight + 5;
+
+    doc.rect(120 - padding, 280 - rectHeight, rectWidth, rectHeight, "F");
+    const textX = 120;
+    const textY = 275;
+    doc.setFontSize(24);
+    doc.setTextColor("#ffffff");
+    doc.text(text, textX, textY);
+
+    doc.save(`OrdenDeCompra-${user._id}.pdf`);
+  };
+
   return (
     <Container className="my-5 text-white">
       <Row>
@@ -283,9 +341,8 @@ const CartPage = () => {
                   tarjeta: "",
                   cuotas: "",
                 }}
-                onSubmit={(values) => paymentMethod(values)}
               >
-                {({ values, handleChange, handleSubmit }) => (
+                {({ values, handleChange }) => (
                   <Form className="mt-3">
                     <div className="d-flex">
                       <Form.Group className="mb-3 me-2" controlId="methodId">
@@ -383,16 +440,48 @@ const CartPage = () => {
                         </Table>
                         <hr />
                         <div className="d-flex justify-content-around">
-                          <Button variant="outline-light">
+                          <Button
+                            variant="outline-light"
+                            onClick={() =>
+                              generarOrdenCompra(
+                                1.1,
+                                "Tarjeta de crédito | Naranja | 1 cuota"
+                              )
+                            }
+                          >
                             Pagar en 1 cuota
                           </Button>
-                          <Button variant="outline-light">
+                          <Button
+                            variant="outline-light"
+                            onClick={() =>
+                              generarOrdenCompra(
+                                1.15,
+                                "Tarjeta de crédito | Naranja | Plan Z"
+                              )
+                            }
+                          >
                             Pagar en Plan Z
                           </Button>
-                          <Button variant="outline-light">
+                          <Button
+                            variant="outline-light"
+                            onClick={() =>
+                              generarOrdenCompra(
+                                1.2,
+                                "Tarjeta de crédito | Naranja | 5 cuotas"
+                              )
+                            }
+                          >
                             Pagar en 5 cuotas
                           </Button>
-                          <Button variant="outline-light">
+                          <Button
+                            variant="outline-light"
+                            onClick={() =>
+                              generarOrdenCompra(
+                                1.25,
+                                "Tarjeta de crédito | Naranja | 6 cuotas"
+                              )
+                            }
+                          >
                             Pagar en 6 cuotas
                           </Button>
                         </div>
@@ -431,13 +520,37 @@ const CartPage = () => {
                         </Table>
                         <hr />
                         <div className="d-flex justify-content-around">
-                          <Button variant="outline-light">
+                          <Button
+                            variant="outline-light"
+                            onClick={() =>
+                              generarOrdenCompra(
+                                1.15,
+                                `Tarjeta de crédito | ${values.tarjeta} | 1 cuota`
+                              )
+                            }
+                          >
                             Pagar en 1 cuota
                           </Button>
-                          <Button variant="outline-light">
+                          <Button
+                            variant="outline-light"
+                            onClick={() =>
+                              generarOrdenCompra(
+                                1.25,
+                                `Tarjeta de crédito | ${values.tarjeta} | 3 cuotas`
+                              )
+                            }
+                          >
                             Pagar en 3 cuotas
                           </Button>
-                          <Button variant="outline-light">
+                          <Button
+                            variant="outline-light"
+                            onClick={() =>
+                              generarOrdenCompra(
+                                1.35,
+                                `Tarjeta de crédito | ${values.tarjeta} | 6 cuotas`
+                              )
+                            }
+                          >
                             Pagar en 6 cuotas
                           </Button>
                         </div>
@@ -462,7 +575,15 @@ const CartPage = () => {
                           </tbody>
                         </Table>
                         <hr />
-                        <Button variant="outline-light">
+                        <Button
+                          variant="outline-light"
+                          onClick={() =>
+                            generarOrdenCompra(
+                              1.35,
+                              `Tarjeta de crédito | ${values.tarjeta} | 6 cuotas`
+                            )
+                          }
+                        >
                           Pagar en 3 cuotas
                         </Button>
                       </>
@@ -488,7 +609,15 @@ const CartPage = () => {
                           </tbody>
                         </Table>
                         <hr />
-                        <Button variant="outline-light">
+                        <Button
+                          variant="outline-light"
+                          onClick={() =>
+                            generarOrdenCompra(
+                              1.25,
+                              `Tarjeta de crédito | ${values.tarjeta} | 3 cuotas`
+                            )
+                          }
+                        >
                           Pagar en 3 cuotas
                         </Button>
                       </>
@@ -496,7 +625,15 @@ const CartPage = () => {
                       <>
                         <h3>Precio final ${subtotal}</h3>
                         <hr />
-                        <Button variant="outline-light">
+                        <Button
+                          variant="outline-light"
+                          onClick={() =>
+                            generarOrdenCompra(
+                              1,
+                              `${values.metodo} | Pago único`
+                            )
+                          }
+                        >
                           Generar orden de compra
                         </Button>
                       </>
