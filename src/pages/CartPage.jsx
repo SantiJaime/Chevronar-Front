@@ -215,58 +215,96 @@ const CartPage = () => {
     });
   };
 
-  const generarOrdenCompra = (interes, metodo) => {
+  const generarOrdenCompra = async (interes, metodo) => {
     setPrecioTotal(subtotal * interes);
-    const doc = new jsPDF();
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_URL_DEPLOY}/ordenes-compra`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            email: user.email,
+            name: user.name,
+            products,
+            price: precioTotal,
+            payMethod: metodo,
+          }),
+        }
+      );
+      const res = await response.json();
+      if (res.status === 201) {
+        Swal.fire({
+          icon: "success",
+          title: res.msg,
+          timer: 2000,
+          showConfirmButton: false,
+        });
+        const doc = new jsPDF();
 
-    doc.text("Orden de compra", 20, 10);
-    doc.addImage("/logo2.png", "PNG", 110, 10, 100, 30);
-    doc.text(`Fecha: ${new Date().toString().split("GMT")[0]}`, 10, 20);
-    doc.text(`Cliente: ${user.name} | ${user.email}`, 10, 30);
-    doc.text(`Método de pago: ${metodo}`, 10, 40);
-    doc.setFontSize(11);
-    doc.text(
-      "Presenta esta orden de compra en nuestra sucursal principal para retirar tus productos. Tienes 24 horas ",
-      10,
-      50
-    );
-    doc.text(
-      "para hacerlo. Una vez pasado el tiempo, se cancelará tu pedido",
-      10,
-      60
-    );
+        doc.text("Orden de compra", 20, 10);
+        doc.setFontSize(12);
+        doc.addImage("/logo2.png", "PNG", 110, 5, 100, 30);
+        doc.text(`Fecha: ${new Date().toString().split("GMT")[0]}`, 10, 20);
+        doc.text(`Cliente: ${user.name} | ${user.email}`, 10, 30);
+        doc.text(`Método de pago: ${metodo}`, 10, 40);
+        doc.setFontSize(11);
+        doc.text(
+          "Presenta esta orden de compra en nuestra sucursal principal para retirar tus productos. Tienes 24 horas ",
+          10,
+          50
+        );
+        doc.text(
+          "para hacerlo. Una vez pasado el tiempo, se cancelará tu pedido",
+          10,
+          60
+        );
 
-    const columns = ["Producto", "Cantidad", "Precio unitario", "Total"];
-    const data = products.map((prod) => [
-      `${prod.nombre}`,
-      `${prod.cantidad}`,
-      `$${prod.precio}`,
-      `$${precioTotalPorProducto[prod._id]}`,
-    ]);
+        const columns = ["Producto", "Cantidad", "Precio unitario", "Total"];
+        const data = products.map((prod) => [
+          `${prod.nombre}`,
+          `${prod.cantidad}`,
+          `$${prod.precio}`,
+          `$${precioTotalPorProducto[prod._id]}`,
+        ]);
 
-    doc.autoTable({
-      startY: 70,
-      head: [columns],
-      body: data,
-    });
+        doc.autoTable({
+          startY: 70,
+          head: [columns],
+          body: data,
+        });
 
-    const backgroundColor = "#3084bc";
-    doc.setFillColor(backgroundColor);
-    const text = `Precio total: $${precioTotal}`;
-    const textWidth = doc.getStringUnitWidth(text) * doc.internal.getFontSize();
-    const textHeight = doc.internal.getLineHeight();
-    const padding = 5;
-    const rectWidth = textWidth - 5;
-    const rectHeight = textHeight + 5;
+        const backgroundColor = "#3084bc";
+        doc.setFillColor(backgroundColor);
+        const text = `Precio total: $${precioTotal}`;
+        const textWidth =
+          doc.getStringUnitWidth(text) * doc.internal.getFontSize();
+        const textHeight = doc.internal.getLineHeight();
+        const padding = 5;
+        const rectWidth = textWidth - 5;
+        const rectHeight = textHeight + 5;
 
-    doc.rect(120 - padding, 280 - rectHeight, rectWidth, rectHeight, "F");
-    const textX = 120;
-    const textY = 275;
-    doc.setFontSize(24);
-    doc.setTextColor("#ffffff");
-    doc.text(text, textX, textY);
+        doc.rect(120 - padding, 280 - rectHeight, rectWidth, rectHeight, "F");
+        const textX = 120;
+        const textY = 275;
+        doc.setFontSize(24);
+        doc.setTextColor("#ffffff");
+        doc.text(text, textX, textY);
 
-    doc.save(`OrdenDeCompra-${user._id}.pdf`);
+        doc.save(`OrdenDeCompra-${user._id}.pdf`);
+      }
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "¡Al parecer hubo un error!",
+        text: error,
+        timer: 2000,
+        showConfirmButton: false,
+      });
+    }
   };
 
   return (
