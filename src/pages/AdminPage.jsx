@@ -10,10 +10,11 @@ import Form from "react-bootstrap/Form";
 const AdminPage = () => {
   const [productos, setProductos] = useState([]);
   const [productosAux, setProductosAux] = useState([]);
-  const [users, setUsers] = useState([])
+  const [users, setUsers] = useState([]);
+  const [buyOrders, setBuyOrders] = useState([]);
   const [tableView, setTableView] = useState("prods");
 
-  const token = JSON.parse(sessionStorage.getItem("token"))
+  const token = JSON.parse(sessionStorage.getItem("token"));
 
   const getProducts = async () => {
     const res = await clientAxios.get("/productos");
@@ -22,19 +23,37 @@ const AdminPage = () => {
   };
 
   const getUsers = async () => {
-    const response = await fetch(`${import.meta.env.VITE_URL_DEPLOY}/usuarios`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        'Authorization': `Bearer ${token}`
+    const response = await fetch(
+      `${import.meta.env.VITE_URL_DEPLOY}/usuarios`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       }
-    })
-    const res = await response.json()
-    setUsers(res.allUsers)
-  }
+    );
+    const res = await response.json();
+    setUsers(res.allUsers);
+  };
+
+  const getOrders = async () => {
+    const response = await fetch(
+      `${import.meta.env.VITE_URL_DEPLOY}/ordenes-compra`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    const res = await response.json();
+    setBuyOrders(res.allOrders);
+  };
 
   useEffect(() => {
-    getProducts(), getUsers();
+    getProducts(), getUsers(), getOrders();
   }, []);
 
   const buscador = (ev) => {
@@ -69,6 +88,13 @@ const AdminPage = () => {
         onClick={() => toggleTable("users")}
       >
         Usuarios
+      </Button>
+      <Button
+        variant="outline-light"
+        className={tableView === "buyOrders" ? "mx-1 active" : "mx-1"}
+        onClick={() => toggleTable("buyOrders")}
+      >
+        Órdenes de compra
       </Button>
       {tableView === "prods" ? (
         <>
@@ -115,11 +141,11 @@ const AdminPage = () => {
             </h3>
           )}
         </>
-      ) : (
+      ) : tableView === "users" ? (
         <>
           <div className="mt-4 d-flex justify-content-between text-white">
             <h3>Usuarios registrados</h3>
-            <CreateModelComp type="user" getUsers={getUsers}/>
+            <CreateModelComp type="user" getUsers={getUsers} />
           </div>
           <hr />
           <Table striped bordered hover responsive variant="dark">
@@ -136,6 +162,35 @@ const AdminPage = () => {
               <TableComp users={users} type="users" getUsers={getUsers} />
             </tbody>
           </Table>
+        </>
+      ) : (
+        <>
+          <div className="mt-4 d-flex justify-content-between text-white">
+            <h3>Órdenes de compra de clientes</h3>
+          </div>
+          <hr />
+          {buyOrders.length > 0 ? (
+            <Table striped bordered hover responsive variant="dark">
+              <thead>
+                <tr>
+                  <th>Cliente</th>
+                  <th>Productos comprados - Cantidad</th>
+                  <th>Precio a pagar</th>
+                  <th>Método de pago</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <TableComp
+                  buyOrders={buyOrders}
+                  type="buyOrders"
+                  getOrders={getOrders}
+                />
+              </tbody>
+            </Table>
+          ) : (
+            <h3 className="text-center">No hay órdenes de compra por el momento</h3>
+          )}
         </>
       )}
     </Container>
