@@ -11,6 +11,7 @@ import OneProductPage from "../pages/OneProductPage";
 import ConfirmMailPage from "../pages/ConfirmMailPage";
 import PrivateRoutes from "../components/PrivateRoutes";
 import CartPage from "../pages/CartPage";
+import BuyOrdersPage from "../pages/BuyOrdersPage";
 
 const RoutesView = () => {
   return (
@@ -28,6 +29,14 @@ const RoutesView = () => {
         element={
           <PrivateRoutes role={"admin"}>
             <AdminPage />
+          </PrivateRoutes>
+        }
+      />
+      <Route
+        path="/orders"
+        element={
+          <PrivateRoutes role={"user"}>
+            <BuyOrdersPage />
           </PrivateRoutes>
         }
       />

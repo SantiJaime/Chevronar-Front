@@ -59,10 +59,13 @@ const NavbarComp = () => {
               <NavLink to="/contact" className="whiteNavLink margenNavLinks">
                 Contacto
               </NavLink>
+              <NavLink to="/orders" className="whiteNavLink margenNavLinks">
+                Mis órdenes de compra
+              </NavLink>
             </Nav>
             <Nav className="ms-3">
               <NavLink to="/cart" className="whiteNavLink margenNavLinks">
-              <i className="bi bi-cart"></i> Mi carrito
+                <i className="bi bi-cart4"></i> Mi carrito
               </NavLink>
               <button
                 onClick={logOut}
