@@ -143,6 +143,7 @@ const TableComp = ({
             }
           );
           const response = await res.json();
+          console.log("error en try", response)
           if (response.status === 200) {
             Swal.fire({
               icon: "success",
@@ -153,6 +154,7 @@ const TableComp = ({
             getOrders();
           }
         } catch (error) {
+          console.log("error en catch", error)
           Swal.fire({
             title: "No se pudo eliminar la orden de compra",
             text: error,
