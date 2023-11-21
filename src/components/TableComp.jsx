@@ -89,7 +89,7 @@ const TableComp = ({
           const responseUser = await resUser.json();
           const { idCart } = responseUser.deletedUser;
           const resCart = await fetch(
-            `${import.meta.env.VITE_URL_DEPLOY}/cart/${idCart}`,
+            `${import.meta.env.VITE_URL_DEPLOY}/carrito/${idCart}`,
             {
               method: "DELETE",
               headers: {
@@ -133,7 +133,7 @@ const TableComp = ({
       if (result.isConfirmed) {
         try {
           const res = await fetch(
-            `${import.meta.env.VITE_URL_LOCAL}/ordenes-compra/${id}`,
+            `${import.meta.env.VITE_URL_DEPLOY}/ordenes-compra/${id}`,
             {
               method: "DELETE",
               headers: {
@@ -154,7 +154,7 @@ const TableComp = ({
           }
         } catch (error) {
           Swal.fire({
-            title: "No se pudo eliminar el producto",
+            title: "No se pudo eliminar la orden de compra",
             text: error,
             icon: "error",
           });

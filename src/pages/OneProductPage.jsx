@@ -17,7 +17,6 @@ const OneProductPage = () => {
     setProd(res.data.oneProd);
   };
 
-
   const addCart = async (idProd) => {
     try {
       const resUser = await fetch(
@@ -52,8 +51,7 @@ const OneProductPage = () => {
           showConfirmButton: false,
           timer: 1500,
         });
-      }
-      else {
+      } else {
         Swal.fire({
           icon: "error",
           title: "¡Al parecer hubo un error!",
@@ -105,11 +103,18 @@ const OneProductPage = () => {
           <p>{prod.descripcion}</p>
           <hr />
           <div className="d-flex justify-content-between">
-            <a href="" className="btn btn-outline-light fs-5">
+            <a
+              href="https://wa.me/message/AQZNUQA6TEJVJ1"
+              className="btn btn-outline-light fs-5"
+            >
               ¿Tienes dudas? <i className="bi bi-whatsapp"></i>
             </a>
             {token && (
-              <Button variant="outline-light" className="fs-5" onClick={() => addCart(prod._id)}>
+              <Button
+                variant="outline-light"
+                className="fs-5"
+                onClick={() => addCart(prod._id)}
+              >
                 <i className="bi bi-cart-plus-fill"></i> Añadir al carrito
               </Button>
             )}
