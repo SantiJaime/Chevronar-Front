@@ -74,6 +74,12 @@ const OneProductPage = () => {
     getProduct();
   }, []);
 
+  const handleWhatsapp = () => {
+    const message = `Hola, tengo dudas acerca de este producto: https://chevronar.vercel.app/product/${params.id}`
+    const url = `https://wa.me/${import.meta.env.VITE_PHONE_NUMBER}?text=${encodeURIComponent(message)}`;
+    open(url, '_blank')
+  };
+
   return (
     <Container className="my-5 text-white">
       <Row>
@@ -103,12 +109,9 @@ const OneProductPage = () => {
           <p>{prod.descripcion}</p>
           <hr />
           <div className="d-flex justify-content-between">
-            <a
-              href="https://wa.me/message/AQZNUQA6TEJVJ1"
-              className="btn btn-outline-light fs-5"
-            >
+            <Button variant="outline-light" className="fs-5" onClick={handleWhatsapp}>
               ¿Tienes dudas? <i className="bi bi-whatsapp"></i>
-            </a>
+            </Button>
             {token && (
               <Button
                 variant="outline-light"
