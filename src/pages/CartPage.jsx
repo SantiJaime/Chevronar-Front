@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
-import { ErrorMessage, Formik } from "formik";
+import { Formik } from "formik";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
 
@@ -216,7 +216,6 @@ const CartPage = () => {
   };
 
   const generarOrdenCompra = async (interes, metodo) => {
-    setPrecioTotal(subtotal * interes);
     try {
       const response = await fetch(
         `${import.meta.env.VITE_URL_DEPLOY}/ordenes-compra`,
@@ -230,7 +229,7 @@ const CartPage = () => {
             email: user.email,
             name: user.name,
             products,
-            price: precioTotal,
+            price: Math.round(subtotal * interes),
             payMethod: metodo,
           }),
         }
@@ -279,7 +278,7 @@ const CartPage = () => {
 
         const backgroundColor = "#3084bc";
         doc.setFillColor(backgroundColor);
-        const text = `Precio total: $${precioTotal}`;
+        const text = `Precio total: $${Math.round(subtotal * interes)}`;
         const textWidth =
           doc.getStringUnitWidth(text) * doc.internal.getFontSize();
         const textHeight = doc.internal.getLineHeight();
@@ -433,11 +432,6 @@ const CartPage = () => {
                               <option value="Titanio">Titanio</option>
                             </Form.Select>
                           </InputGroup>
-                          <ErrorMessage
-                            name="tarjeta"
-                            component="p"
-                            className="error-message"
-                          />
                         </Form.Group>
                       )}
                     </div>
@@ -456,23 +450,23 @@ const CartPage = () => {
                           <tbody>
                             <tr>
                               <td>1 pago (10% de interés)</td>
-                              <td>${precioTotal * 1.1}</td>
-                              <td>${precioTotal * 1.1}</td>
+                              <td>${Math.round(subtotal * 1.1)}</td>
+                              <td>${Math.round(subtotal * 1.1)}</td>
                             </tr>
                             <tr>
                               <td>Plan Z (15% de interés)</td>
-                              <td>${(precioTotal * 1.15) / 3}</td>
-                              <td>${precioTotal * 1.15}</td>
+                              <td>${Math.round((subtotal * 1.15) / 3)}</td>
+                              <td>${Math.round(subtotal * 1.15)}</td>
                             </tr>
                             <tr>
                               <td>5 pagos (20% de interés)</td>
-                              <td>${(precioTotal * 1.2) / 5}</td>
-                              <td>${precioTotal * 1.2}</td>
+                              <td>${Math.round((subtotal * 1.2) / 5)}</td>
+                              <td>${Math.round(subtotal * 1.2)}</td>
                             </tr>
                             <tr>
                               <td>6 pagos (25% de interés)</td>
-                              <td>${(precioTotal * 1.25) / 6}</td>
-                              <td>${precioTotal * 1.25}</td>
+                              <td>${Math.round((subtotal * 1.25) / 6)}</td>
+                              <td>${Math.round(subtotal * 1.25)}</td>
                             </tr>
                           </tbody>
                         </Table>
@@ -541,18 +535,18 @@ const CartPage = () => {
                           <tbody>
                             <tr>
                               <td>1 pago (15% de interés)</td>
-                              <td>${precioTotal * 1.15}</td>
-                              <td>${precioTotal * 1.15}</td>
+                              <td>${Math.round(subtotal * 1.15)}</td>
+                              <td>${Math.round(subtotal * 1.15)}</td>
                             </tr>
                             <tr>
                               <td>3 pagos (25% de interés)</td>
-                              <td>${(precioTotal * 1.25) / 3}</td>
-                              <td>${precioTotal * 1.25}</td>
+                              <td>${Math.round((subtotal * 1.25) / 3)}</td>
+                              <td>${Math.round(subtotal * 1.25)}</td>
                             </tr>
                             <tr>
                               <td>6 pagos (35% de interés)</td>
-                              <td>${(precioTotal * 1.35) / 6}</td>
-                              <td>${precioTotal * 1.35}</td>
+                              <td>${Math.round((subtotal * 1.35) / 6)}</td>
+                              <td>${Math.round(subtotal * 1.35)}</td>
                             </tr>
                           </tbody>
                         </Table>
@@ -607,8 +601,8 @@ const CartPage = () => {
                           <tbody>
                             <tr>
                               <td>3 pagos (35% de interés)</td>
-                              <td>${(precioTotal * 1.35) / 3}</td>
-                              <td>${precioTotal * 1.35}</td>
+                              <td>${Math.round((subtotal * 1.35) / 3)}</td>
+                              <td>${Math.round(subtotal * 1.35)}</td>
                             </tr>
                           </tbody>
                         </Table>
@@ -641,8 +635,8 @@ const CartPage = () => {
                           <tbody>
                             <tr>
                               <td>3 pagos (25% de interés)</td>
-                              <td>${(precioTotal * 1.25) / 3}</td>
-                              <td>${precioTotal * 1.25}</td>
+                              <td>${Math.round((subtotal * 1.25) / 3)}</td>
+                              <td>${Math.round(subtotal * 1.25)}</td>
                             </tr>
                           </tbody>
                         </Table>

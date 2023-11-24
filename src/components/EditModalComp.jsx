@@ -3,7 +3,10 @@ import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import { Button } from "react-bootstrap";
 import InputGroup from "react-bootstrap/InputGroup";
-import { errorEditUserSchema, errorProdSchema } from "../utils/validationSchemas";
+import {
+  errorEditUserSchema,
+  errorProdSchema,
+} from "../utils/validationSchemas";
 import { Formik } from "formik";
 import Swal from "sweetalert2";
 
@@ -30,7 +33,7 @@ const EditModalComp = ({ type, prod, getProducts, user, getUsers }) => {
           }),
           headers: {
             "Content-Type": "application/json",
-            'Authorization': `Bearer ${token}`
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -44,8 +47,7 @@ const EditModalComp = ({ type, prod, getProducts, user, getUsers }) => {
         });
         handleClose();
         getProducts();
-      }
-      else{
+      } else {
         Swal.fire({
           icon: "error",
           title: res.msg,
@@ -63,18 +65,21 @@ const EditModalComp = ({ type, prod, getProducts, user, getUsers }) => {
   };
   const editUser = async (values) => {
     try {
-      const res = await fetch(`${import.meta.env.VITE_URL_DEPLOY}/usuarios/${user._id}`, {
-        method: "PUT",
-        body: JSON.stringify({
-          name: values.name,
-          role: values.role,
-        }),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-      }
-      })
-      const response = await res.json()
+      const res = await fetch(
+        `${import.meta.env.VITE_URL_DEPLOY}/usuarios/${user._id}`,
+        {
+          method: "PUT",
+          body: JSON.stringify({
+            name: values.name,
+            role: values.role,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const response = await res.json();
 
       if (response.status === 200) {
         Swal.fire({
@@ -90,7 +95,7 @@ const EditModalComp = ({ type, prod, getProducts, user, getUsers }) => {
       Swal.fire({
         icon: "error",
         title: "No se pudo editar el usuario",
-        text: error
+        text: error,
       });
     }
   };
@@ -263,84 +268,95 @@ const EditModalComp = ({ type, prod, getProducts, user, getUsers }) => {
         </>
       ) : type === "users" ? (
         <>
-        <Button variant="success" onClick={handleShow} className="my-2 mx-2">
-        <i className="bi bi-pencil-fill"></i> Editar
-      </Button>
+          <Button variant="success" onClick={handleShow} className="my-2 mx-2">
+            <i className="bi bi-pencil-fill"></i> Editar
+          </Button>
 
-      <Modal show={show} onHide={handleClose}>
-        <div className="fondo text-white">
-          <Modal.Header closeButton>
-            <Modal.Title>Edita este producto</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-          <Formik
-              initialValues={{
-                name: user.name,
-                role: user.role,
-              }}
-              validationSchema={errorEditUserSchema}
-              onSubmit={(values) => editUser(values)}
-            >
-              {({ values, errors, touched, handleChange, handleSubmit }) => (
-                <Form>
-                  <Form.Group className="mb-3" controlId="nameId">
-                    <Form.Label>Nombre y apellido</Form.Label>
-                    <InputGroup className="mb-3">
-                      <InputGroup.Text id="groupName">
-                        <i className="bi bi-person-circle"></i>
-                      </InputGroup.Text>
-                      <Form.Control
-                        placeholder="Ejemplo: Juan González"
-                        type="text"
-                        name="name"
-                        value={values.name}
-                        onChange={handleChange}
-                        className={errors.name && touched.name && "is-invalid"}
-                      />
-                    </InputGroup>
-                    <small className="text-danger">
-                      {errors.name && touched.name && errors.name}
-                    </small>
-                  </Form.Group>
-                  <Form.Group className="mb-3" controlId="roleId">
-                    <Form.Label>Rol</Form.Label>
-                    <InputGroup className="mb-3">
-                      <InputGroup.Text id="groupRole">
-                        <i className="bi bi-person-fill-gear"></i>
-                      </InputGroup.Text>
-                      <Form.Select
-                        name="role"
-                        value={values.role}
-                        onChange={handleChange}
-                        className={errors.role && touched.role && "is-invalid"}
-                      >
-                        <option value="user">Usuario</option>
-                        <option value="admin">Administrador</option>
-                      </Form.Select>
-                    </InputGroup>
-                    <small className="text-danger">
-                      {errors.role && touched.role && errors.role}
-                    </small>
-                  </Form.Group>
-                  <hr />
-                  <div className="text-end">
-                    <Button
-                      variant="outline-light"
-                      type="submit"
-                      onClick={handleSubmit}
-                    >
-                      Guardar cambios
-                    </Button>
-                  </div>
-                </Form>
-              )}
-            </Formik>
-          </Modal.Body>
-          </div>
+          <Modal show={show} onHide={handleClose}>
+            <div className="fondo text-white">
+              <Modal.Header closeButton>
+                <Modal.Title>Edita este usuario</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <Formik
+                  initialValues={{
+                    name: user.name,
+                    role: user.role,
+                  }}
+                  validationSchema={errorEditUserSchema}
+                  onSubmit={(values) => editUser(values)}
+                >
+                  {({
+                    values,
+                    errors,
+                    touched,
+                    handleChange,
+                    handleSubmit,
+                  }) => (
+                    <Form>
+                      <Form.Group className="mb-3" controlId="nameId">
+                        <Form.Label>Nombre y apellido</Form.Label>
+                        <InputGroup className="mb-3">
+                          <InputGroup.Text id="groupName">
+                            <i className="bi bi-person-circle"></i>
+                          </InputGroup.Text>
+                          <Form.Control
+                            placeholder="Ejemplo: Juan González"
+                            type="text"
+                            name="name"
+                            value={values.name}
+                            onChange={handleChange}
+                            className={
+                              errors.name && touched.name && "is-invalid"
+                            }
+                          />
+                        </InputGroup>
+                        <small className="text-danger">
+                          {errors.name && touched.name && errors.name}
+                        </small>
+                      </Form.Group>
+                      <Form.Group className="mb-3" controlId="roleId">
+                        <Form.Label>Rol</Form.Label>
+                        <InputGroup className="mb-3">
+                          <InputGroup.Text id="groupRole">
+                            <i className="bi bi-person-fill-gear"></i>
+                          </InputGroup.Text>
+                          <Form.Select
+                            name="role"
+                            value={values.role}
+                            onChange={handleChange}
+                            className={
+                              errors.role && touched.role && "is-invalid"
+                            }
+                          >
+                            <option value="user">Usuario</option>
+                            <option value="admin">Administrador</option>
+                          </Form.Select>
+                        </InputGroup>
+                        <small className="text-danger">
+                          {errors.role && touched.role && errors.role}
+                        </small>
+                      </Form.Group>
+                      <hr />
+                      <div className="text-end">
+                        <Button
+                          variant="outline-light"
+                          type="submit"
+                          onClick={handleSubmit}
+                        >
+                          Guardar cambios
+                        </Button>
+                      </div>
+                    </Form>
+                  )}
+                </Formik>
+              </Modal.Body>
+            </div>
           </Modal>
         </>
-       
-      ) : ""}
+      ) : (
+        ""
+      )}
     </>
   );
 };
