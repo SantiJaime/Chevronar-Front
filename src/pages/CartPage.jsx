@@ -239,12 +239,11 @@ const CartPage = () => {
         Swal.fire({
           icon: "success",
           title: res.msg,
-          timer: 2000,
-          showConfirmButton: false,
+          text: "Tienes 24h para ir a nuestra sucursal principal para pagar y retirar tus productos. Pasado el tiempo, se cancelará tu orden de compra",
         });
         const doc = new jsPDF();
 
-        doc.text("Orden de compra", 20, 10);
+        doc.text("Orden de compra", 10, 10);
         doc.setFontSize(12);
         doc.addImage("/logo2.png", "PNG", 110, 5, 100, 30);
         doc.text(`Fecha: ${new Date().toString().split("GMT")[0]}`, 10, 20);
@@ -252,7 +251,7 @@ const CartPage = () => {
         doc.text(`Método de pago: ${metodo}`, 10, 40);
         doc.setFontSize(11);
         doc.text(
-          "Presenta esta orden de compra en nuestra sucursal principal para retirar tus productos. Tienes 24 horas ",
+          "Presenta esta orden de compra en nuestra sucursal principal para pagar y retirar tus productos. Tienes 24 horas ",
           10,
           50
         );

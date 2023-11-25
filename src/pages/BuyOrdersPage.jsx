@@ -40,10 +40,11 @@ const BuyOrdersPage = () => {
       setBuyOrders(resOrders.oneUserOrders);
     } catch (error) {
       Swal.fire({
-        position: "center",
         icon: "error",
         title: "¡Al parecer hubo un error!",
         text: error,
+        timer: 2000,
+        showConfirmButton: false,
       });
     }
   };

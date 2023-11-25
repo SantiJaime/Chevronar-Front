@@ -165,9 +165,7 @@ const AdminPage = () => {
         </>
       ) : (
         <>
-          <div className="mt-4 d-flex justify-content-between text-white">
-            <h3>Órdenes de compra de clientes</h3>
-          </div>
+          <h3 className="mt-4">Órdenes de compra de clientes</h3>
           <hr />
           {buyOrders.length > 0 ? (
             <Table striped bordered hover responsive variant="dark">
@@ -189,7 +187,9 @@ const AdminPage = () => {
               </tbody>
             </Table>
           ) : (
-            <h3 className="text-center">No hay órdenes de compra por el momento</h3>
+            <h3 className="text-center">
+              No hay órdenes de compra por el momento
+            </h3>
           )}
         </>
       )}

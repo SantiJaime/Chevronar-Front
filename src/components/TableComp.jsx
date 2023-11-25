@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from "react-bootstrap";
 import Swal from "sweetalert2";
 import EditModalComp from "./EditModalComp";
+import emailjs from "emailjs-com";
 
 const TableComp = ({
   type,
@@ -120,7 +121,7 @@ const TableComp = ({
       }
     });
   };
-  const deleteOrder = (id) => {
+  const deleteOrder = (id, email) => {
     Swal.fire({
       title: "¿Estás seguro de borrar esta orden de compra?",
       icon: "warning",
@@ -151,6 +152,17 @@ const TableComp = ({
               timer: 1500,
             });
             getOrders();
+            const templateParams = {
+              to_email: email,
+              message:
+                "Han pasado 24 horas desde que reservaste tus productos. Tu orden de compra ha sido cancelada",
+            };
+            await emailjs.send(
+              import.meta.env.VITE_EMAIL_SERVICE_ID,
+              import.meta.env.VITE_EMAIL_TEMPLATE_ID_BUY_ORDER,
+              templateParams,
+              import.meta.env.VITE_EMAIL_PUBLIC_KEY
+            );
           } else {
             Swal.fire({
               icon: "error",
@@ -237,7 +249,7 @@ const TableComp = ({
                 <Button
                   variant="danger"
                   className="my-2 mx-2"
-                  onClick={() => deleteOrder(order._id)}
+                  onClick={() => deleteOrder(order._id, order.email)}
                 >
                   <i className="bi bi-trash3-fill"></i> Eliminar
                 </Button>
