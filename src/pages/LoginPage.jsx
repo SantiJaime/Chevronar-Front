@@ -2,8 +2,8 @@ import React from "react";
 import { Formik } from "formik";
 import { Button, Container } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
-import { errorLoginSchema } from "../utils/validationSchemas";
 import InputGroup from "react-bootstrap/InputGroup";
+import { errorLoginSchema } from "../utils/validationSchemas";
 import { Link, useNavigate } from "react-router-dom";
 import clientAxios, { config } from "../utils/axiosClient";
 import Swal from "sweetalert2";
@@ -120,7 +120,7 @@ const LoginPage = () => {
       </div>
       <hr />
       <div className="text-center">
-        <Link className="btn btn-outline-light fs-5">
+        <Link className="btn btn-outline-light fs-5" to={"/sendMailRecoveryPass"}>
           <i className="bi bi-unlock"></i> ¿Olvidaste tu contraseña? Haz click aquí
         </Link>
       </div>

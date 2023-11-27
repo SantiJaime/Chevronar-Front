@@ -32,10 +32,13 @@ const RegisterComp = ({ type, getUsers, handleClose }) => {
             text: "Debes verificar tu cuenta para iniciar sesión. Checkea tu correo electrónico",
           });
           const templateParams = {
+            subject: "¡Bienvenido a Chevronar Autopartes!",
             to_email: values.email,
+            title: "¡Bienvenido a Chevronar Autopartes!",
             message:
               "Gracias por registrarte en nuestra página. Por favor, verifica tu correo electrónico clickeando en el siguiente enlace:",
-            token: res.data.token,
+            buttonText: "Confirmar correo electrónico",
+            buttonLink: `https://chevronar-back.vercel.app/usuarios/confirm/${res.data.token}`
           };
           await emailjs.send(
             import.meta.env.VITE_EMAIL_SERVICE_ID,
@@ -81,7 +84,6 @@ const RegisterComp = ({ type, getUsers, handleClose }) => {
         handleClose();
       }
     } catch (error) {
-      console.log(error);
       Swal.fire({
         icon: "error",
         title: "¡Al parecer hubo un error",

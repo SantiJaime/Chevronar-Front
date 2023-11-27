@@ -12,6 +12,8 @@ import ConfirmMailPage from "../pages/ConfirmMailPage";
 import PrivateRoutes from "../components/PrivateRoutes";
 import CartPage from "../pages/CartPage";
 import BuyOrdersPage from "../pages/BuyOrdersPage";
+import MailRecoveryPassPage from "../pages/MailRecoveryPassPage";
+import NewUserPassPage from "../pages/NewUserPassPage.";
 
 const RoutesView = () => {
   return (
@@ -41,6 +43,8 @@ const RoutesView = () => {
         }
       />
       <Route path="/product/:id" element={<OneProductPage />} />
+      <Route path="/newUserPass/:token" element={<NewUserPassPage />} />
+      <Route path="/sendMailRecoveryPass" element={<MailRecoveryPassPage />} />
       <Route path="/confirm" element={<ConfirmMailPage />} />
       <Route path="/products" element={<ProductsPage />} />
       <Route path="/register" element={<RegisterPage />} />

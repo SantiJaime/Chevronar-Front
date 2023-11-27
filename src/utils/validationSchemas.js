@@ -27,3 +27,10 @@ export const errorEditUserSchema = yup.object().shape({
     name: yup.string().required("Campo nombre y apellido obligatorio"),
     role: yup.string().required("Campo rol del usuario obligatorio")
 })
+export const errorMailSchema = yup.object().shape({
+    email: yup.string().required("Campo correo electrónico obligatorio").email("Formato Email inválido")
+})
+export const errorPassSchema = yup.object().shape({
+    pass: yup.string().required("Campo contraseña obligatorio").min(8, "La contraseña debe ser de al menos 8 caracteres"),
+    repeatPass: yup.string().required("Campo repetir contraseña obligatorio").min(8, "La contraseña debe ser de al menos 8 caracteres"),
+})
