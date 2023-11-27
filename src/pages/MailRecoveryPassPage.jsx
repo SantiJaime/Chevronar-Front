@@ -33,7 +33,7 @@ const MailRecoveryPassPage = () => {
                 message:
                   "Has solicitado un cambio de contraseña en tu cuenta, por favor clickea el siguiente enlace para restablecer tu contraseña:",
                 buttonText: "Restablecer contraseña",
-                buttonLink: `http://localhost:5173/newUserPass/${res.data.token}`
+                buttonLink: `https://chevronar.vercel.app/newUserPass/${res.data.token}`
               };
               await emailjs.send(
                 import.meta.env.VITE_EMAIL_SERVICE_ID,
