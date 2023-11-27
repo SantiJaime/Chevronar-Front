@@ -5,17 +5,63 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import { errorPassSchema } from "../utils/validationSchemas";
 import Swal from "sweetalert2";
-import emailjs from "emailjs-com";
+import clientAxios, { config } from "../utils/axiosClient";
+import { useNavigate } from "react-router-dom";
 
 const NewUserPassPage = () => {
+  const navigate = useNavigate();
+  const tokenPass = JSON.parse(localStorage.getItem("tokenPass"));
+
+  const newUserPass = async (values) => {
+    try {
+      if (values.pass === values.repeatPass) {
+        const res = await clientAxios.put(
+          `/usuarios/recoveryPass/${tokenPass}`,
+          {
+            pass: values.pass,
+          },
+          config
+        );
+        if (res.status === 200) {
+          Swal.fire({
+            icon: "success",
+            title: res.data.msg,
+            text: "Ya puedes iniciar sesión",
+            timer: 2000,
+            showConfirmButton: false,
+          });
+          localStorage.removeItem("tokenPass");
+          navigate("/login")
+        }
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Las contraseñas no coinciden",
+          text: "Revisa tus datos",
+          timer: 2000,
+          showConfirmButton: false,
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "¡Al parecer hubo un error!",
+        text: error.response.data.msg,
+        timer: 2000,
+        showConfirmButton: false,
+      });
+    }
+  };
+
   return (
     <Container className="my-5 d-flex justify-content-center">
       <Formik
         initialValues={{
-          email: "",
+          pass: "",
+          repeatPass: "",
         }}
         validationSchema={errorPassSchema}
-        onSubmit={(values) => sendMail(values.pass)}
+        onSubmit={(values) => newUserPass(values)}
       >
         {({ values, errors, touched, handleChange, handleSubmit }) => (
           <Form className="fondo p-3 w-75 rounded-3 sombra text-white">
@@ -64,7 +110,7 @@ const NewUserPassPage = () => {
             <hr />
             <div className="text-end">
               <Button variant="light" type="submit" onClick={handleSubmit}>
-                Enviar correo de recuperación
+                Restablecer contraseña
               </Button>
             </div>
           </Form>

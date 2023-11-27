@@ -32,7 +32,7 @@ const RegisterComp = ({ type, getUsers, handleClose }) => {
             text: "Debes verificar tu cuenta para iniciar sesión. Checkea tu correo electrónico",
           });
           const templateParams = {
-            subject: "¡Bienvenido a Chevronar Autopartes!",
+            subject: "Chevronar | Registro exitoso",
             to_email: values.email,
             title: "¡Bienvenido a Chevronar Autopartes!",
             message:

@@ -26,6 +26,7 @@ const MailRecoveryPassPage = () => {
               timer: 3000,
               showConfirmButton: false,
             });
+            localStorage.setItem("tokenPass", JSON.stringify(res.data.token))
             const templateParams = {
                 subject: "Chevronar | Recuperación de contraseña",
                 to_email: email,
@@ -33,7 +34,7 @@ const MailRecoveryPassPage = () => {
                 message:
                   "Has solicitado un cambio de contraseña en tu cuenta, por favor clickea el siguiente enlace para restablecer tu contraseña:",
                 buttonText: "Restablecer contraseña",
-                buttonLink: `https://chevronar.vercel.app/newUserPass/${res.data.token}`
+                buttonLink: "https://chevronar.vercel.app/newUserPass"
               };
               await emailjs.send(
                 import.meta.env.VITE_EMAIL_SERVICE_ID,
