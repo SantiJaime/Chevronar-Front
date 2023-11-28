@@ -34,7 +34,7 @@ const MailRecoveryPassPage = () => {
                 message:
                   "Has solicitado un cambio de contraseña en tu cuenta, por favor clickea el siguiente enlace para restablecer tu contraseña:",
                 buttonText: "Restablecer contraseña",
-                buttonLink: `${import.meta.env.VITE_URL_DEPLOY}/newUserPass`
+                buttonLink: `${import.meta.env.VITE_URL_DEPLOY_FRONT}/newUserPass`
               };
               await emailjs.send(
                 import.meta.env.VITE_EMAIL_SERVICE_ID,
