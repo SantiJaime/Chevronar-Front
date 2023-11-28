@@ -22,7 +22,7 @@ const MailRecoveryPassPage = () => {
           Swal.fire({
               icon: "success",
               title: res.data.msg,
-              text: "Checkea tu correo electrónico",
+              text: "Checkea tu correo electrónico. El correo puede demorar, por favor sé paciente.",
               timer: 3000,
               showConfirmButton: false,
             });
@@ -34,7 +34,7 @@ const MailRecoveryPassPage = () => {
                 message:
                   "Has solicitado un cambio de contraseña en tu cuenta, por favor clickea el siguiente enlace para restablecer tu contraseña:",
                 buttonText: "Restablecer contraseña",
-                buttonLink: "https://chevronar.vercel.app/newUserPass"
+                buttonLink: `${import.meta.env.VITE_URL_DEPLOY}/newUserPass`
               };
               await emailjs.send(
                 import.meta.env.VITE_EMAIL_SERVICE_ID,

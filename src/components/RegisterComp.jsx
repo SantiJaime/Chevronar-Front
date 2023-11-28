@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import { Formik } from "formik";
@@ -13,6 +13,9 @@ import Swal from "sweetalert2";
 import emailjs from "emailjs-com";
 
 const RegisterComp = ({ type, getUsers, handleClose }) => {
+  const [viewPass, setViewPass] = useState(false);
+  const [viewRepeatPass, setRepeatViewPass] = useState(false);
+
   const createUser = async (values) => {
     try {
       if (values.pass === values.repeatPass) {
@@ -38,7 +41,7 @@ const RegisterComp = ({ type, getUsers, handleClose }) => {
             message:
               "Gracias por registrarte en nuestra página. Por favor, verifica tu correo electrónico clickeando en el siguiente enlace:",
             buttonText: "Confirmar correo electrónico",
-            buttonLink: `https://chevronar-back.vercel.app/usuarios/confirm/${res.data.token}`
+            buttonLink: `https://chevronar-back.vercel.app/usuarios/confirm/${res.data.token}`,
           };
           await emailjs.send(
             import.meta.env.VITE_EMAIL_SERVICE_ID,
@@ -93,6 +96,9 @@ const RegisterComp = ({ type, getUsers, handleClose }) => {
       });
     }
   };
+
+  const handleViewPass = () => setViewPass(!viewPass);
+  const handleRepeatViewPass = () => setRepeatViewPass(!viewRepeatPass)
   return (
     <>
       {
@@ -157,12 +163,17 @@ const RegisterComp = ({ type, getUsers, handleClose }) => {
                     </InputGroup.Text>
                     <Form.Control
                       placeholder="***********"
-                      type="password"
+                      type={!viewPass ? "password" : "text"}
                       name="pass"
                       value={values.pass}
                       onChange={handleChange}
                       className={errors.pass && touched.pass && "is-invalid"}
                     />
+                    <Button variant="light" onClick={handleViewPass}>
+                      <i
+                        className={!viewPass ? "bi bi-eye-slash" : "bi bi-eye"}
+                      ></i>
+                    </Button>
                   </InputGroup>
                   <small className="text-danger">
                     {errors.pass && touched.pass && errors.pass}
@@ -176,7 +187,7 @@ const RegisterComp = ({ type, getUsers, handleClose }) => {
                     </InputGroup.Text>
                     <Form.Control
                       placeholder="***********"
-                      type="password"
+                      type={!viewRepeatPass ? "password" : "text"}
                       name="repeatPass"
                       value={values.repeatPass}
                       onChange={handleChange}
@@ -184,6 +195,11 @@ const RegisterComp = ({ type, getUsers, handleClose }) => {
                         errors.repeatPass && touched.repeatPass && "is-invalid"
                       }
                     />
+                    <Button variant="light" onClick={handleRepeatViewPass}>
+                      <i
+                        className={!viewRepeatPass ? "bi bi-eye-slash" : "bi bi-eye"}
+                      ></i>
+                    </Button>
                   </InputGroup>
                   <small className="text-danger">
                     {errors.repeatPass &&
@@ -262,12 +278,17 @@ const RegisterComp = ({ type, getUsers, handleClose }) => {
                     </InputGroup.Text>
                     <Form.Control
                       placeholder="***********"
-                      type="password"
+                      type={!viewPass ? "password" : "text"}
                       name="pass"
                       value={values.pass}
                       onChange={handleChange}
                       className={errors.pass && touched.pass && "is-invalid"}
                     />
+                    <Button variant="light" onClick={handleViewPass}>
+                      <i
+                        className={!viewPass ? "bi bi-eye-slash" : "bi bi-eye"}
+                      ></i>
+                    </Button>
                   </InputGroup>
                   <small className="text-danger">
                     {errors.pass && touched.pass && errors.pass}

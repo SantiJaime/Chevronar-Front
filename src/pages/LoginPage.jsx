@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Formik } from "formik";
 import { Button, Container } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
@@ -10,6 +10,7 @@ import Swal from "sweetalert2";
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const [viewPass, setViewPass] = useState(false);
 
   const loginUser = async (values) => {
     try {
@@ -50,6 +51,7 @@ const LoginPage = () => {
       });
     }
   };
+  const handleViewPass = () => setViewPass(!viewPass);
 
   return (
     <Container className="my-5 text-white">
@@ -85,26 +87,30 @@ const LoginPage = () => {
                   {errors.email && touched.email && errors.email}
                 </small>
               </Form.Group>
-
               <Form.Group className="mb-3" controlId="passId">
-                <Form.Label>Contraseña</Form.Label>
-                <InputGroup className="mb-3">
-                  <InputGroup.Text id="groupPass">
-                    <i className="bi bi-key-fill"></i>
-                  </InputGroup.Text>
-                  <Form.Control
-                    placeholder="***********"
-                    type="password"
-                    name="pass"
-                    value={values.pass}
-                    onChange={handleChange}
-                    className={errors.pass && touched.pass && "is-invalid"}
-                  />
-                </InputGroup>
-                <small className="text-danger">
-                  {errors.pass && touched.pass && errors.pass}
-                </small>
-              </Form.Group>
+                  <Form.Label>Contraseña</Form.Label>
+                  <InputGroup className="mb-3">
+                    <InputGroup.Text id="groupPass">
+                      <i className="bi bi-key-fill"></i>
+                    </InputGroup.Text>
+                    <Form.Control
+                      placeholder="***********"
+                      type={!viewPass ? "password" : "text"}
+                      name="pass"
+                      value={values.pass}
+                      onChange={handleChange}
+                      className={errors.pass && touched.pass && "is-invalid"}
+                    />
+                    <Button variant="light" onClick={handleViewPass}>
+                      <i
+                        className={!viewPass ? "bi bi-eye-slash" : "bi bi-eye"}
+                      ></i>
+                    </Button>
+                  </InputGroup>
+                  <small className="text-danger">
+                    {errors.pass && touched.pass && errors.pass}
+                  </small>
+                </Form.Group>
               <hr />
               <div className="d-flex justify-content-between">
                 <Link to={"/register"} className="linkFooter">
