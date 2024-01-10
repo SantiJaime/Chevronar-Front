@@ -28,7 +28,7 @@ const TableComp = ({
       if (result.isConfirmed) {
         try {
           const res = await fetch(
-            `${import.meta.env.VITE_URL_LOCAL}/productos/${id}`,
+            `${import.meta.env.VITE_URL_DEPLOY}/productos/${id}`,
             {
               method: "DELETE",
               headers: {
