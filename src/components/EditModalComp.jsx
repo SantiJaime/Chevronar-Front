@@ -321,17 +321,24 @@ const EditModalComp = ({ type, prod, getProducts, user, getUsers }) => {
                           <InputGroup.Text id="groupRole">
                             <i className="bi bi-person-fill-gear"></i>
                           </InputGroup.Text>
-                          <Form.Select
-                            name="role"
-                            value={values.role}
-                            onChange={handleChange}
-                            className={
-                              errors.role && touched.role && "is-invalid"
-                            }
-                          >
-                            <option value="user">Usuario</option>
-                            <option value="admin">Administrador</option>
-                          </Form.Select>
+                          {user.role === "admin" ? (
+                            <Form.Control
+                              defaultValue={user.role}
+                              disabled
+                            ></Form.Control>
+                          ) : (
+                            <Form.Select
+                              name="role"
+                              value={values.role}
+                              onChange={handleChange}
+                              className={
+                                errors.role && touched.role && "is-invalid"
+                              }
+                            >
+                              <option value="user">Usuario</option>
+                              <option value="admin">Administrador</option>
+                            </Form.Select>
+                          )}
                         </InputGroup>
                         <small className="text-danger">
                           {errors.role && touched.role && errors.role}
