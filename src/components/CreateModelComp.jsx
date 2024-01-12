@@ -151,7 +151,7 @@ const CreateModelComp = ({ type, getProducts, getUsers }) => {
                             <option value="Distribución">Distribución</option>
                             <option value="Accesorios">Accesorios</option>
                             <option value="Embrague">Embrague</option>
-                            <option value="Suspensión">Suspensión</option>
+                            <option value="Suspensión y Dirección">Suspensión y Dirección</option>
                             <option value="Frenos">Frenos</option>
                             <option value="Lubricantes">Lubricantes</option>
                             <option value="Carrocería">Carrocería</option>

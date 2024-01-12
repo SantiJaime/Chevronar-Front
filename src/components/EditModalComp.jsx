@@ -193,7 +193,7 @@ const EditModalComp = ({ type, prod, getProducts, user, getUsers }) => {
                             <option value="Distribución">Distribución</option>
                             <option value="Accesorios">Accesorios</option>
                             <option value="Embrague">Embrague</option>
-                            <option value="Suspensión">Suspensión</option>
+                            <option value="Suspensión y Dirección">Suspensión y Dirección</option>
                             <option value="Frenos">Frenos</option>
                             <option value="Lubricantes">Lubricantes</option>
                             <option value="Carrocería">Carrocería</option>
@@ -323,7 +323,7 @@ const EditModalComp = ({ type, prod, getProducts, user, getUsers }) => {
                           </InputGroup.Text>
                           {user.role === "admin" ? (
                             <Form.Control
-                              defaultValue={user.role}
+                              defaultValue={"Administrador"}
                               disabled
                             ></Form.Control>
                           ) : (
