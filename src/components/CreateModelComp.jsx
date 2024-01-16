@@ -47,6 +47,13 @@ const CreateModelComp = ({ type, getProducts, getUsers }) => {
         handleClose();
         getProducts();
       }
+      else{
+        Swal.fire({
+          icon: "error",
+          title: "No se pudo crear el producto",
+          text: error,
+        });
+      }
     } catch (error) {
       Swal.fire({
         icon: "error",
