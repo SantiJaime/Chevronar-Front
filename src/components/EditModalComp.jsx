@@ -16,6 +16,16 @@ const EditModalComp = ({ type, prod, getProducts, user, getUsers }) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const categorias = [
+    "Destacado",
+    "Motor",
+    "Distribución",
+    "Accesorios",
+    "Suspensión y Dirección",
+    "Frenos",
+    "Lubricantes y Refrigerantes",
+    "Baterías",
+  ];
   const token = JSON.parse(sessionStorage.getItem("token"));
 
   const editProduct = async (values, idProd) => {
@@ -188,18 +198,9 @@ const EditModalComp = ({ type, prod, getProducts, user, getUsers }) => {
                               errors.cat && touched.cat && "is-invalid"
                             }
                           >
-                            <option value="Destacado">Destacado</option>
-                            <option value="Motor">Motor</option>
-                            <option value="Distribución">Distribución</option>
-                            <option value="Accesorios">Accesorios</option>
-                            <option value="Embrague">Embrague</option>
-                            <option value="Suspensión y Dirección">Suspensión y Dirección</option>
-                            <option value="Frenos">Frenos</option>
-                            <option value="Lubricantes">Lubricantes</option>
-                            <option value="Carrocería">Carrocería</option>
-                            <option value="Faros">Faros</option>
-                            <option value="Baterías">Baterías</option>
-                            <option value="Exterior">Exterior</option>
+                            {categorias.map((cat) => (
+                              <option value={cat}>{cat}</option>
+                            ))}
                           </Form.Select>
                         </InputGroup>
                         <small className="text-danger">

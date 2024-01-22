@@ -14,7 +14,18 @@ const CreateModelComp = ({ type, getProducts, getUsers }) => {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  
+
+  const categorias = [
+    "Sin seleccionar categoría",
+    "Destacado",
+    "Motor",
+    "Distribución",
+    "Accesorios",
+    "Suspensión y Dirección",
+    "Frenos",
+    "Lubricantes y Refrigerantes",
+    "Baterías",
+  ];
   const token = JSON.parse(sessionStorage.getItem("token"));
 
   const createProduct = async (values) => {
@@ -32,7 +43,7 @@ const CreateModelComp = ({ type, getProducts, getUsers }) => {
           }),
           headers: {
             "Content-Type": "application/json",
-            'Authorization': `Bearer ${token}`
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -46,8 +57,7 @@ const CreateModelComp = ({ type, getProducts, getUsers }) => {
         });
         handleClose();
         getProducts();
-      }
-      else{
+      } else {
         Swal.fire({
           icon: "error",
           title: "No se pudo crear el producto",
@@ -152,19 +162,15 @@ const CreateModelComp = ({ type, getProducts, getUsers }) => {
                               errors.cat && touched.cat && "is-invalid"
                             }
                           >
-                            <option value="">Sin seleccionar categoría</option>
-                            <option value="Destacado">Destacado</option>
-                            <option value="Motor">Motor</option>
-                            <option value="Distribución">Distribución</option>
-                            <option value="Accesorios">Accesorios</option>
-                            <option value="Embrague">Embrague</option>
-                            <option value="Suspensión y Dirección">Suspensión y Dirección</option>
-                            <option value="Frenos">Frenos</option>
-                            <option value="Lubricantes">Lubricantes</option>
-                            <option value="Carrocería">Carrocería</option>
-                            <option value="Faros">Faros</option>
-                            <option value="Baterías">Baterías</option>
-                            <option value="Exterior">Exterior</option>
+                            {categorias.map((cat) => (
+                              <option
+                                value={
+                                  cat === "Sin seleccionar categoría" ? "" : cat
+                                }
+                              >
+                                {cat}
+                              </option>
+                            ))}
                           </Form.Select>
                         </InputGroup>
                         <small className="text-danger">
@@ -233,22 +239,28 @@ const CreateModelComp = ({ type, getProducts, getUsers }) => {
         </>
       ) : type === "user" ? (
         <>
-        <Button variant="light" onClick={handleShow}>
-          Crear usuario
-        </Button>
+          <Button variant="light" onClick={handleShow}>
+            Crear usuario
+          </Button>
 
-        <Modal show={show} onHide={handleClose}>
-          <div className="fondo text-white">
-            <Modal.Header closeButton>
-              <Modal.Title>Crea un nuevo usuario aquí</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <RegisterComp type={"admin"} getUsers={getUsers} handleClose={handleClose} />
-            </Modal.Body>
-          </div>
-        </Modal>
-      </>
-      ) : ""}
+          <Modal show={show} onHide={handleClose}>
+            <div className="fondo text-white">
+              <Modal.Header closeButton>
+                <Modal.Title>Crea un nuevo usuario aquí</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <RegisterComp
+                  type={"admin"}
+                  getUsers={getUsers}
+                  handleClose={handleClose}
+                />
+              </Modal.Body>
+            </div>
+          </Modal>
+        </>
+      ) : (
+        ""
+      )}
     </>
   );
 };
