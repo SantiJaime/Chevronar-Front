@@ -8,6 +8,7 @@ import InputGroup from "react-bootstrap/InputGroup";
 import { Formik } from "formik";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
+import emailjs from "emailjs-com";
 
 const CartPage = () => {
   const [products, setProducts] = useState([]);
@@ -241,6 +242,24 @@ const CartPage = () => {
           title: res.msg,
           text: "Tienes 24h para ir a nuestra sucursal principal para pagar y retirar tus productos. Pasado el tiempo, se cancelará tu orden de compra",
         });
+
+        let prodsEmail = products.map((prod) => `|| Nombre: ${prod.nombre} - Cantidad: ${prod.cantidad} - Precio: $${prod.precio} - Link: https://chevronar.vercel.app/product/${prod._id}`);
+        
+        const templateParams = {
+          to_email: "chevronar@hotmail.com.ar",
+          subject: "Orden de compra",
+          title: `Nueva orden de compra de ${user.name}`,
+          message:
+            `Nueva orden de compra de ${user.name} | ${user.email} | Precio: $${Math.round(subtotal * interes)} | Método de pago: ${metodo}`,
+          prods: JSON.stringify(prodsEmail),
+        };
+        await emailjs.send(
+          import.meta.env.VITE_EMAIL_SERVICE_ID,
+          import.meta.env.VITE_EMAIL_TEMPLATE_ID_BUY_ORDER,
+          templateParams,
+          import.meta.env.VITE_EMAIL_PUBLIC_KEY
+        );
+
         const doc = new jsPDF();
 
         doc.text("Orden de compra", 10, 10);
@@ -292,7 +311,7 @@ const CartPage = () => {
         doc.setTextColor("#ffffff");
         doc.text(text, textX, textY);
 
-        doc.save(`OrdenDeCompra-${user._id}.pdf`);
+        doc.save(`${user._id}-${Date.now()}.pdf`);
       }
     } catch (error) {
       Swal.fire({
