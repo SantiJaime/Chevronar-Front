@@ -154,6 +154,8 @@ const TableComp = ({
             getOrders();
             const templateParams = {
               to_email: email,
+              subject: "Cancelación de orden de compra",
+              title: "Tu orden de compra ha sido cancelada",
               message:
                 "Han pasado 24 horas desde que reservaste tus productos. Tu orden de compra ha sido cancelada",
             };
