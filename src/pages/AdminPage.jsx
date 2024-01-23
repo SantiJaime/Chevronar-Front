@@ -13,7 +13,8 @@ const AdminPage = () => {
   const [users, setUsers] = useState([]);
   const [buyOrders, setBuyOrders] = useState([]);
   const [tableView, setTableView] = useState("prods");
-
+  const [search, setSearch] = useState("");
+  
   const token = JSON.parse(sessionStorage.getItem("token"));
 
   const getProducts = async () => {
@@ -58,18 +59,17 @@ const AdminPage = () => {
 
   const buscador = (ev) => {
     const { value } = ev.target;
-
-    let busqueda = value.toLowerCase();
-
-    const filtro = productos.filter((prod) => {
-      let nombre = prod.nombre.toLowerCase();
-
-      return nombre.includes(busqueda);
-    });
-
-    if (busqueda.length > 0) setProductos(filtro);
-    else setProductos(productosAux);
+    setSearch(value.toLowerCase());
   };
+
+  useEffect(() => {
+    if (search) {
+      const resultados = productosAux.filter((prod) =>
+        prod.nombre.toLowerCase().includes(search)
+      );
+      setProductos(resultados);
+    } else setProductos(productosAux);
+  }, [search, productosAux]);
 
   const toggleTable = (view) => setTableView(view);
 

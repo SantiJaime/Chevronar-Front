@@ -8,6 +8,7 @@ import clientAxios from "../utils/axiosClient";
 const ProductsPage = () => {
   const [productos, setProductos] = useState([]);
   const [productosAux, setProductosAux] = useState([]);
+  const [search, setSearch] = useState("");
 
   const getProducts = async () => {
     const res = await clientAxios.get("/productos");
@@ -17,18 +18,17 @@ const ProductsPage = () => {
 
   const buscador = (ev) => {
     const { value } = ev.target;
-
-    let busqueda = value.toLowerCase();
-
-    const filtro = productos.filter((prod) => {
-      let nombre = prod.nombre.toLowerCase();
-
-      return nombre.includes(busqueda);
-    });
-
-    if (busqueda.length > 0) setProductos(filtro);
-    else setProductos(productosAux);
+    setSearch(value.toLowerCase());
   };
+
+  useEffect(() => {
+    if (search) {
+      const resultados = productosAux.filter((prod) =>
+        prod.nombre.toLowerCase().includes(search)
+      );
+      setProductos(resultados);
+    } else setProductos(productosAux);
+  }, [search, productosAux]);
 
   useEffect(() => {
     getProducts();

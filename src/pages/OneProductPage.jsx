@@ -8,6 +8,7 @@ const OneProductPage = () => {
   const params = useParams();
 
   const token = JSON.parse(sessionStorage.getItem("token"));
+  const role = JSON.parse(sessionStorage.getItem("role"));
   const idUser = JSON.parse(sessionStorage.getItem("idUser"));
 
   const [prod, setProd] = useState({});
@@ -75,9 +76,11 @@ const OneProductPage = () => {
   }, []);
 
   const handleWhatsapp = () => {
-    const message = `Hola, tengo dudas acerca de este producto: https://chevronar.vercel.app/product/${params.id}`
-    const url = `https://wa.me/${import.meta.env.VITE_PHONE_NUMBER}?text=${encodeURIComponent(message)}`;
-    open(url, '_blank')
+    const message = `Hola, tengo dudas acerca de este producto: https://chevronar.vercel.app/product/${params.id}`;
+    const url = `https://wa.me/${
+      import.meta.env.VITE_PHONE_NUMBER
+    }?text=${encodeURIComponent(message)}`;
+    open(url, "_blank");
   };
 
   return (
@@ -106,13 +109,19 @@ const OneProductPage = () => {
             </Link>
           )}
           <hr />
-          <p>{prod.descripcion}</p>
+          <p className="fs-5">{prod.descripcion}</p>
           <hr />
           <div className="d-flex justify-content-between">
-            <Button variant="outline-light" className="fs-5" onClick={handleWhatsapp}>
-              ¿Tienes dudas? <i className="bi bi-whatsapp"></i>
-            </Button>
-            {token && (
+            {role !== "admin" && (
+              <Button
+                variant="outline-light"
+                className="fs-5"
+                onClick={handleWhatsapp}
+              >
+                ¿Tienes dudas? <i className="bi bi-whatsapp"></i>
+              </Button>
+            )}
+            {token && role === "user" && (
               <Button
                 variant="outline-light"
                 className="fs-5"
