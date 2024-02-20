@@ -16,7 +16,7 @@ const CardComp = ({ type, productos }) => {
                 <Card.Img
                   variant="top"
                   src={prod.imagen}
-                  alt={prod.nombre}
+                  alt={`Chevronar | ${prod.nombre}`}
                   className="img-fluid"
                 />
                 <Card.Body>
@@ -54,7 +54,7 @@ const CardComp = ({ type, productos }) => {
                   <Card.Img
                     variant="top"
                     src={prod.imagen}
-                    alt={prod.nombre}
+                    alt={`Chevronar | ${prod.nombre}`}
                     className="img-fluid"
                   />
                   <Card.Body>

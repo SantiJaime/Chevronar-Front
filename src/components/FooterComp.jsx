@@ -20,33 +20,45 @@ const FooterComp = () => {
             </div>
           </Col>
           <hr className="displayNone" />
-          <Col lg={4} md={6} sm={12} className="d-flex align-items-center justify-content-center">
-            <div>
-            <h5>Nuestras sucursales</h5>
-            <ul>
-              <li>Av. San Martín 112, Banda del Río Salí</li>
-              <li>Av. Colón 315, San Miguel de Tucumán</li>
-            </ul>
-
-            </div>
+          <Col
+            lg={4}
+            md={6}
+            sm={12}
+            className="d-flex align-items-center justify-content-center"
+          >
+            <Link className="text-decoration-none text-white" to={"/contact"}>
+              <h5>Nuestras sucursales</h5>
+              <ul>
+                <li>Av. San Martín 112, Banda del Río Salí</li>
+                <li>Av. Colón 315, San Miguel de Tucumán</li>
+              </ul>
+            </Link>
           </Col>
           <hr className="displayNone" />
-          <Col lg={4} md={6} sm={12} className="d-flex align-items-center justify-content-center">
+          <Col
+            lg={4}
+            md={6}
+            sm={12}
+            className="d-flex align-items-center justify-content-center"
+          >
             <div>
-            <h5 className="text-center">Buscanos en nuestras redes</h5>
-            <div className="d-flex justify-content-center">
-              <a
-                className="mx-3"
-                href="https://www.facebook.com/chevronar.repuestosyaccesorios"
-                target="_blank"
-              >
-                <i className="bi bi-facebook fs-1 fb"></i>
-              </a>
-              <a className="mx-3" href="https://wa.me/message/AQZNUQA6TEJVJ1" target="_blank">
-                <i className="bi bi-whatsapp fs-1 wp"></i>
-              </a>
-            </div>
-
+              <h5 className="text-center">Buscanos en nuestras redes</h5>
+              <div className="d-flex justify-content-center">
+                <a
+                  className="mx-3"
+                  href="https://www.facebook.com/chevronar.repuestosyaccesorios"
+                  target="_blank"
+                >
+                  <i className="bi bi-facebook fs-1 fb"></i>
+                </a>
+                <a
+                  className="mx-3"
+                  href="https://wa.me/message/AQZNUQA6TEJVJ1"
+                  target="_blank"
+                >
+                  <i className="bi bi-whatsapp fs-1 wp"></i>
+                </a>
+              </div>
             </div>
           </Col>
         </Row>

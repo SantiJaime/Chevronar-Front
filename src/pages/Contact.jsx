@@ -39,7 +39,7 @@ const Contact = () => {
         </Col>
         <Col lg={6} md={12} sm={12} className="my-1">
           <div className="text-white fondo p-3 rounded-4">
-            <h3>Nuestras sucursales</h3>
+            <h3>Sucursales de Chevronar</h3>
             <hr />
             <iframe
               src={

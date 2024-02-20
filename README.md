@@ -1,8 +1,8 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Chevronar
 
-Currently, two official plugins are available:
+Hola! Este proyecto realizado por mí está dirigido hacia una casa de venta de autopartes llamada Chevronar para vehículos de la marca Chevrolet. Consta de dos partes: el Frontend y la API de Backend. Para visitar esta segunda haz click aquí: https://github.com/SantiJaime/Chevronar-Back.git
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+
+
+![Logo](http://imgfz.com/i/56VKBni.png)
