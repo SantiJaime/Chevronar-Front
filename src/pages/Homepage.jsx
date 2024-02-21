@@ -22,28 +22,28 @@ const Homepage = () => {
         <Carousel.Item>
           <img
             className="d-block img-fluid carr"
-            src="/slider-1.jpg"
+            src="/slider1.jpg"
             alt="Slider 1"
           />
         </Carousel.Item>
         <Carousel.Item>
           <img
             className="d-block img-fluid carr"
-            src="/slider-2.jpg"
+            src="/slider2.jpg"
             alt="Slider 2"
           />
         </Carousel.Item>
         <Carousel.Item>
           <img
             className="d-block img-fluid carr"
-            src="/slider-3.jpg"
+            src="/slider3.jpg"
             alt="Slider 3"
           />
         </Carousel.Item>
         <Carousel.Item>
           <img
             className="d-block img-fluid carr"
-            src="/slider-4.jpg"
+            src="/slider4.jpg"
             alt="Slider 4"
           />
         </Carousel.Item>
