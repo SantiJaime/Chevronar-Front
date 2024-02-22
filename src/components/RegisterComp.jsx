@@ -75,6 +75,7 @@ const RegisterComp = ({ type, getUsers, handleClose }) => {
         name: values.name,
         pass: values.pass,
         role: values.role,
+        status: "Verified"
       });
       if (res.status === 201) {
         Swal.fire({

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Container } from "react-bootstrap";
+import { Button, Container, Spinner } from "react-bootstrap";
 import Table from "react-bootstrap/Table";
 import TableComp from "../components/TableComp";
 import clientAxios from "../utils/axiosClient";
@@ -14,13 +14,15 @@ const AdminPage = () => {
   const [buyOrders, setBuyOrders] = useState([]);
   const [tableView, setTableView] = useState("prods");
   const [search, setSearch] = useState("");
-  
+  const [mostrarSpinner, setMostrarSpinner] = useState(true);
+
   const token = JSON.parse(sessionStorage.getItem("token"));
 
   const getProducts = async () => {
     const res = await clientAxios.get("/productos");
     setProductos(res.data.allProds);
     setProductosAux(res.data.allProds);
+    setMostrarSpinner(false);
   };
 
   const getUsers = async () => {
@@ -96,7 +98,12 @@ const AdminPage = () => {
       >
         Órdenes de compra
       </Button>
-      {tableView === "prods" ? (
+      {mostrarSpinner ? (
+        <div className="text-center my-5">
+          <Spinner />
+          <h5 className="mt-3">Cargando productos...</h5>
+        </div>
+      ) : tableView === "prods" ? (
         <>
           <div className="mt-4 d-flex justify-content-between">
             <h3>Productos</h3>
