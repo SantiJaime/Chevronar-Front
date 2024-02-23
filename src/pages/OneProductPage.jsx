@@ -99,17 +99,20 @@ const OneProductPage = () => {
           />
         </Col>
         <Col lg={8} md={12} sm={12} className="my-3">
-          <h3>{prod.nombre}</h3>
+          <h1>{prod.nombre}</h1>
           <hr />
           {token ? (
-            <h4>${prod.precio}</h4>
+            <div className="preciosClass">
+              <h3>${prod.precio}</h3>
+              <small>*Precios sujetos a cambios sin previo aviso</small>
+            </div>
           ) : (
             <Link className="linkFooter fs-5" to={"/login"}>
               Debes iniciar sesión para ver los precios
             </Link>
           )}
           <hr />
-          <p className="fs-5">{prod.descripcion}</p>
+          <p>{prod.descripcion}</p>
           <hr />
           <div className="d-flex justify-content-between">
             {role !== "admin" && (
