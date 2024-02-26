@@ -87,6 +87,9 @@ li {
   justify-content: space-between;
   align-items: center;
 }
+.widthButton{
+  width: 120px;
+}
 @media (min-width: 992px) {
   .displayNone {
     display: none;
