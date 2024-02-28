@@ -37,7 +37,7 @@ const Contact = () => {
             </div>
           </div>
         </Col>
-        <Col lg={6} md={12} sm={12} className="my-1" data-aos="fade-up-left">
+        <Col lg={6} md={12} sm={12} className="my-1" data-aos="zoom-in">
           <div className="text-white fondo p-3 rounded-4">
             <h3>Sucursales de Chevronar</h3>
             <hr />

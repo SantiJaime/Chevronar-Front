@@ -8,12 +8,9 @@ import { useEffect } from "react";
 
 function App() {
   useEffect(() => {
-    setTimeout(() => {
-      setCargando(false);
-    }, 3000);
     Aos.init({ duration: 1800, once: true });
   }, []);
-  
+
   return (
     <Router>
       <div className="App">
