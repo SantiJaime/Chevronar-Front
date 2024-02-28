@@ -114,7 +114,7 @@ const CreateModelComp = ({ type, getProducts, getUsers }) => {
                           </InputGroup.Text>
                           <Form.Control
                             placeholder="Ej: Kit distribución"
-                            type="text"
+                            as={"textarea"}
                             name="name"
                             value={values.name}
                             onChange={handleChange}

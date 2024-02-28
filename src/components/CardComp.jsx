@@ -31,7 +31,7 @@ const CardComp = ({ type, productos }) => {
 
                   <hr />
                   <Link
-                    className="btn btn-outline-light"
+                    className="btn btn-light w-100"
                     to={`/product/${prod._id}`}
                   >
                     Ver más
@@ -58,17 +58,17 @@ const CardComp = ({ type, productos }) => {
                     className="img-fluid"
                   />
                   <Card.Body>
-                  {token ? (
-                    <>
-                      <Card.Title>${prod.precio}</Card.Title>
-                      <Card.Text>{prod.nombre}</Card.Text>
-                    </>
-                  ) : (
-                    <Card.Title>{prod.nombre}</Card.Title>
-                  )}
+                    {token ? (
+                      <>
+                        <Card.Title>${prod.precio}</Card.Title>
+                        <Card.Text>{prod.nombre}</Card.Text>
+                      </>
+                    ) : (
+                      <Card.Title>{prod.nombre}</Card.Title>
+                    )}
                     <hr />
                     <Link
-                      className="btn btn-outline-light"
+                      className="btn btn-light w-100"
                       to={`/product/${prod._id}`}
                     >
                       Ver más

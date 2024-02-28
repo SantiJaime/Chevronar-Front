@@ -149,8 +149,8 @@ const EditModalComp = ({ type, prod, getProducts, user, getUsers }) => {
                             <i className="bi bi-card-text"></i>
                           </InputGroup.Text>
                           <Form.Control
-                            placeholder="Ej: Collar"
-                            type="text"
+                            as={"textarea"}
+                            placeholder="Ej: Kit distribución"
                             name="name"
                             value={values.name}
                             onChange={handleChange}

@@ -8,7 +8,7 @@ const Contact = () => {
   return (
     <Container className="my-5">
       <Row className="justify-content-around">
-        <Col className="my-1" lg={6} md={12} sm={12}>
+        <Col className="my-1" lg={6} md={12} sm={12} data-aos="fade-up-right">
           <div className="text-white fondo p-3 rounded-4">
             <h3>Contactanos</h3>
             <hr />
@@ -37,7 +37,7 @@ const Contact = () => {
             </div>
           </div>
         </Col>
-        <Col lg={6} md={12} sm={12} className="my-1">
+        <Col lg={6} md={12} sm={12} className="my-1" data-aos="fade-up-left">
           <div className="text-white fondo p-3 rounded-4">
             <h3>Sucursales de Chevronar</h3>
             <hr />
@@ -49,7 +49,7 @@ const Contact = () => {
               }
               className="rounded-4 w-100"
               height="340px"
-              loading="lazy"
+              loading="async"
               referrerPolicy="no-referrer-when-downgrade"
             ></iframe>
             <hr />

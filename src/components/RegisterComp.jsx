@@ -115,7 +115,7 @@ const RegisterComp = ({ type, getUsers, handleClose }) => {
             onSubmit={(values) => createUser(values)}
           >
             {({ values, errors, touched, handleChange, handleSubmit }) => (
-              <Form className="fondo p-3 w-75 rounded-3 sombra text-white">
+              <Form className="fondo p-3 w-75 rounded-3 sombra text-white" data-aos="zoom-out-up">
                 <h3>Crea tu cuenta aquí</h3>
                 <hr />
                 <Form.Group className="mb-3" controlId="emailId">

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Col, Container, Row } from "react-bootstrap";
+import { Button, Col, Container, Row, Spinner } from "react-bootstrap";
 import Table from "react-bootstrap/Table";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -16,6 +16,7 @@ const CartPage = () => {
   const [precioTotal, setPrecioTotal] = useState(0);
   const [subtotal, setSubtotal] = useState(0);
   const [user, setUser] = useState({});
+  const [mostrarSpinner, setMostrarSpinner] = useState(true);
 
   const token = JSON.parse(sessionStorage.getItem("token"));
   const idUser = JSON.parse(sessionStorage.getItem("idUser"));
@@ -48,6 +49,7 @@ const CartPage = () => {
       );
       const responseCart = await resCart.json();
       setProducts(responseCart.cart.productos);
+      setMostrarSpinner(false);
     } catch (error) {
       Swal.fire({
         position: "center",
@@ -243,14 +245,20 @@ const CartPage = () => {
           text: "Tienes 24h para ir a nuestra sucursal principal para pagar y retirar tus productos. Pasado el tiempo, se cancelará tu orden de compra",
         });
 
-        let prodsEmail = products.map((prod) => `|| Nombre: ${prod.nombre} - Cantidad: ${prod.cantidad} - Precio: $${prod.precio} - Link: https://chevronar.vercel.app/product/${prod._id}`);
-        
+        let prodsEmail = products.map(
+          (prod) =>
+            `|| Nombre: ${prod.nombre} - Cantidad: ${prod.cantidad} - Precio: $${prod.precio} - Link: https://chevronar.vercel.app/product/${prod._id}`
+        );
+
         const templateParams = {
           to_email: "chevronar@hotmail.com.ar",
           subject: "Orden de compra",
           title: `Nueva orden de compra de ${user.name}`,
-          message:
-            `Nueva orden de compra de ${user.name} | ${user.email} | Precio: $${Math.round(subtotal * interes)} | Método de pago: ${metodo}`,
+          message: `Nueva orden de compra de ${user.name} | ${
+            user.email
+          } | Precio: $${Math.round(
+            subtotal * interes
+          )} | Método de pago: ${metodo}`,
           prods: JSON.stringify(prodsEmail),
         };
         await emailjs.send(
@@ -339,7 +347,13 @@ const CartPage = () => {
             </Button>
           </div>
           <hr />
-          {products.length > 0 ? (
+  
+          {mostrarSpinner ? (
+            <div className="text-center my-5">
+              <Spinner />
+              <h5 className="mt-3">Cargando productos...</h5>
+            </div>
+          ) : products.length > 0 ? (
             <>
               <Table striped bordered hover variant="dark" responsive>
                 <thead>

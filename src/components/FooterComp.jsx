@@ -3,13 +3,14 @@ import { Col, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const FooterComp = () => {
+  const role = JSON.parse(sessionStorage.getItem("role"));
   return (
     <footer className="py-3">
       <Container fluid>
         <Row className="justify-content-center">
           <Col lg={4} md={6} sm={12} className="margenLogo">
-            <div className="text-center">
-              <Link to={"/"} className="whiteNavLink img-fluid">
+            <div className="flex justify-center">
+              <Link to={"/"} className="img-fluid">
                 <img
                   src="/logo2.png"
                   alt="Chevronar Logo"
@@ -26,13 +27,23 @@ const FooterComp = () => {
             sm={12}
             className="d-flex align-items-center justify-content-center"
           >
-            <Link className="text-decoration-none text-white" to={"/contact"}>
-              <h5>Nuestras sucursales</h5>
-              <ul>
-                <li>Av. San Martín 112, Banda del Río Salí</li>
-                <li>Av. Colón 315, San Miguel de Tucumán</li>
-              </ul>
-            </Link>
+            {role !== "admin" ? (
+              <Link className="text-decoration-none text-white" to={"/contact"}>
+                <h5>Nuestras sucursales</h5>
+                <ul>
+                  <li>Av. San Martín 112, Banda del Río Salí</li>
+                  <li>Av. Colón 315, San Miguel de Tucumán</li>
+                </ul>
+              </Link>
+            ) : (
+              <div className="d-block">
+                <h5>Nuestras sucursales</h5>
+                <ul>
+                  <li>Av. San Martín 112, Banda del Río Salí</li>
+                  <li>Av. Colón 315, San Miguel de Tucumán</li>
+                </ul>
+              </div>
+            )}
           </Col>
           <hr className="displayNone" />
           <Col

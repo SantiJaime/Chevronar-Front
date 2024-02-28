@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 
 const BuyOrdersPage = () => {
   const [buyOrders, setBuyOrders] = useState([]);
+  const [mostrarSpinner, setMostrarSpinner] = useState(false)
 
   const token = JSON.parse(sessionStorage.getItem("token"));
   const idUser = JSON.parse(sessionStorage.getItem("idUser"));
@@ -38,6 +39,7 @@ const BuyOrdersPage = () => {
       );
       const resOrders = await responseOrders.json();
       setBuyOrders(resOrders.oneUserOrders);
+      setMostrarSpinner(false)
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -166,7 +168,13 @@ const BuyOrdersPage = () => {
         <h3>Mis órdenes de compra</h3>
       </div>
       <hr />
-      {buyOrders.length > 0 ? (
+      {mostrarSpinner ?
+                  <div className="text-center my-5">
+                  <Spinner />
+                  <h5 className="mt-3">Cargando productos...</h5>
+                </div>
+                :
+      buyOrders.length > 0 ? (
         <Table striped bordered hover responsive variant="dark">
           <thead>
             <tr>

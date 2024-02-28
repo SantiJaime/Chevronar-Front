@@ -55,7 +55,7 @@ const LoginPage = () => {
 
   return (
     <Container className="my-5 text-white">
-      <div className="d-flex justify-content-center mb-5">
+      <div className="d-flex justify-content-center mb-5" data-aos="zoom-in">
         <Formik
           initialValues={{
             email: "",
@@ -124,8 +124,8 @@ const LoginPage = () => {
           )}
         </Formik>
       </div>
+      <div className="text-center" data-aos="fade-up">
       <hr />
-      <div className="text-center">
         <Link className="btn btn-outline-light fs-5" to={"/sendMailRecoveryPass"}>
           <i className="bi bi-unlock"></i> ¿Olvidaste tu contraseña? Haz click aquí
         </Link>
