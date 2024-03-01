@@ -12,10 +12,11 @@ const OneProductPage = () => {
   const idUser = JSON.parse(sessionStorage.getItem("idUser"));
 
   const [prod, setProd] = useState({});
-
+  const [desc, setDesc] = useState([])
   const getProduct = async () => {
     const res = await clientAxios.get(`/productos/${params.id}`);
     setProd(res.data.oneProd);
+    setDesc(res.data.oneProd.descripcion.split("| "))
   };
 
   const addCart = async (idProd) => {
@@ -73,6 +74,7 @@ const OneProductPage = () => {
 
   useEffect(() => {
     getProduct();
+    // console.log(desc)
   }, []);
 
   const handleWhatsapp = () => {
@@ -112,7 +114,12 @@ const OneProductPage = () => {
             </Link>
           )}
           <hr />
-          <p>{prod.descripcion}</p>
+          <ul className="list-disc">
+            {
+              desc.map((item, index) => 
+              <li key={index}>{item}</li>)
+            }
+          </ul>
           <hr />
           <div className="d-flex justify-content-between">
             {role !== "admin" && (

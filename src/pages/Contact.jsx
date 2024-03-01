@@ -3,7 +3,7 @@ import { Button, Col, Container, Row } from "react-bootstrap";
 
 const Contact = () => {
   const [toggle, setToggle] = useState("banda");
-  
+
   const toggleMap = (map) => setToggle(map);
   return (
     <Container className="my-5">
@@ -32,8 +32,10 @@ const Contact = () => {
               </ul>
               <hr />
               <h5 className="text-decoration-underline">Nuestros horarios</h5>
-              <li>Lunes a viernes: 08:30 a 13:00 | 16:00 a 20:00</li>
-              <li>Sábados: 08:30 a 13:00</li>
+              <ul className="m-0 p-0">
+                <li>Lunes a viernes: 08:30 a 13:00 | 16:00 a 20:00</li>
+                <li>Sábados: 08:30 a 13:00</li>
+              </ul>
             </div>
           </div>
         </Col>

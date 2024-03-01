@@ -218,7 +218,7 @@ const TableComp = ({
               <td>{user._id}</td>
               <td>{user.name}</td>
               <td>{user.email}</td>
-              <td>{user.role}</td>
+              <td>{user.role === "user" ? "Usuario" : "Administrador"}</td>
               <td className="text-center">
                 <EditModalComp type={"users"} getUsers={getUsers} user={user} />
                 <Button

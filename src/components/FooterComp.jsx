@@ -28,9 +28,12 @@ const FooterComp = () => {
             className="d-flex align-items-center justify-content-center"
           >
             {role !== "admin" ? (
-              <Link className="text-decoration-none text-white" to={"/contact"}>
+              <Link
+                className="text-decoration-none text-white hover:bg-neutral-700 rounded-md p-2 transition"
+                to={"/contact"}
+              >
                 <h5>Nuestras sucursales</h5>
-                <ul>
+                <ul className="m-0 p-0">
                   <li>Av. San Martín 112, Banda del Río Salí</li>
                   <li>Av. Colón 315, San Miguel de Tucumán</li>
                 </ul>

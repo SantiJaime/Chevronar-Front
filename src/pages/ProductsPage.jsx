@@ -71,7 +71,7 @@ const ProductsPage = () => {
               </div>
               <input
                 id="buscadorProductos"
-                className="border text-sm rounded-full block w-full ps-10 p-2.5 bg-zinc-900 placeholder-gray-200 dark:text-white focus:border-gray-900"
+                className="border text-sm rounded-full block w-full ps-10 p-2.5 bg-neutral-900 placeholder-gray-200 dark:text-white focus:border-gray-900"
                 placeholder="Busca tu producto aquí"
                 type="search"
                 onChange={buscador}

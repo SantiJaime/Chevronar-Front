@@ -45,9 +45,6 @@ footer {
   transition: 200ms;
   color: rgb(170, 170, 170);
 }
-li {
-  list-style: none;
-}
 .wp,
 .fb {
   color: aliceblue;
