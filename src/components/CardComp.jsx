@@ -4,8 +4,6 @@ import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
 
 const CardComp = ({ type, productos }) => {
-  const token = JSON.parse(sessionStorage.getItem("token"));
-
   return (
     <>
       {type === "prod" ? (
@@ -20,14 +18,8 @@ const CardComp = ({ type, productos }) => {
                   className="img-fluid"
                 />
                 <Card.Body>
-                  {token ? (
-                    <>
-                      <Card.Title>${prod.precio}</Card.Title>
-                      <Card.Text>{prod.nombre}</Card.Text>
-                    </>
-                  ) : (
-                    <Card.Title>{prod.nombre}</Card.Title>
-                  )}
+                  <Card.Title>{prod.nombre}</Card.Title>
+                  <Card.Title>${prod.precio}</Card.Title>
 
                   <hr />
                   <Link
@@ -58,14 +50,8 @@ const CardComp = ({ type, productos }) => {
                     className="img-fluid"
                   />
                   <Card.Body>
-                    {token ? (
-                      <>
-                        <Card.Title>${prod.precio}</Card.Title>
-                        <Card.Text>{prod.nombre}</Card.Text>
-                      </>
-                    ) : (
-                      <Card.Title>{prod.nombre}</Card.Title>
-                    )}
+                    <Card.Title>{prod.nombre}</Card.Title>
+                    <Card.Title>${prod.precio}</Card.Title>
                     <hr />
                     <Link
                       className="btn btn-light w-100"
