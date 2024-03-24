@@ -92,7 +92,7 @@ const OneProductPage = () => {
   }, []);
 
   const handleWhatsapp = () => {
-    const message = `Hola, tengo dudas acerca de este producto: https://chevronar.vercel.app/product/${params.id}`;
+    const message = `Hola, tengo dudas acerca de este producto: ${prod.nombre} | https://chevronar.com/product/${params.id}`;
     const url = `https://wa.me/${
       import.meta.env.VITE_PHONE_NUMBER
     }?text=${encodeURIComponent(message)}`;
@@ -118,22 +118,18 @@ const OneProductPage = () => {
               <img
                 src={prod.imagen}
                 className="img-fluid rounded-4"
-                alt={prod.nombre}
+                alt={`Chevronar | ${prod.nombre}`}
               />
             </Col>
             <Col lg={8} md={12} sm={12} className="my-3">
               <h1>{prod.nombre}</h1>
               <hr />
-              {token ? (
-                <div className="preciosClass">
-                  <h3>${prod.precio}</h3>
-                  <small>*Precios sujetos a cambios sin previo aviso</small>
-                </div>
-              ) : (
-                <Link className="linkFooter fs-5" to={"/login"}>
-                  Debes iniciar sesión para ver los precios
-                </Link>
-              )}
+
+              <div className="preciosClass">
+                <h3>${prod.precio}</h3>
+                <small>*Precios sujetos a cambios sin previo aviso</small>
+              </div>
+
               <hr />
               <ul className="list-disc">
                 {desc.map((item, index) => (

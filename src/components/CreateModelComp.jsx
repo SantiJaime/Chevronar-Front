@@ -5,7 +5,6 @@ import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import { errorProdSchema } from "../utils/validationSchemas";
-// import RegisterComp from "./RegisterComp";
 import Swal from "sweetalert2";
 import RegisterComp from "./RegisterComp";
 
@@ -61,7 +60,7 @@ const CreateModelComp = ({ type, getProducts, getUsers }) => {
         Swal.fire({
           icon: "error",
           title: "No se pudo crear el producto",
-          text: error,
+          text: res.msg,
         });
       }
     } catch (error) {

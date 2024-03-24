@@ -247,7 +247,7 @@ const CartPage = () => {
 
         let prodsEmail = products.map(
           (prod) =>
-            `|| Nombre: ${prod.nombre} - Cantidad: ${prod.cantidad} - Precio: $${prod.precio} - Link: https://chevronar.vercel.app/product/${prod._id}`
+            `|| Nombre: ${prod.nombre} - Cantidad: ${prod.cantidad} - Precio: $${prod.precio} - Link: https://chevronar.com/product/${prod._id}`
         );
 
         const templateParams = {
