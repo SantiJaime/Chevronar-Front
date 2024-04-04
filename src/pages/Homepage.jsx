@@ -38,7 +38,7 @@ const Homepage = () => {
         {carouselImgs.map((img, index) => (
           <Carousel.Item key={index}>
             <img
-              className="w-full object-fill img-fluid "
+              className="w-full object-fill img-fluid"
               src={img}
               alt={`Slider ${index + 1}`}
             />
