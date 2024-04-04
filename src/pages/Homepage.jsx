@@ -55,7 +55,6 @@ const Homepage = () => {
               style={{height: height, width: "100%"}}
               className="object-cover"
               alt={`Slider ${index + 1}`}
-              loading="lazy"
             />
           </Carousel.Item>
         ))}
