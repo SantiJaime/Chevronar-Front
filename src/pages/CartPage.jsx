@@ -272,7 +272,7 @@ const CartPage = () => {
 
         doc.text("Orden de compra", 10, 10);
         doc.setFontSize(12);
-        doc.addImage("/logo2.png", "PNG", 110, 5, 100, 30);
+        doc.addImage("/logo2.webp", "PNG", 110, 5, 100, 30);
         doc.text(`Fecha: ${new Date().toString().split("GMT")[0]}`, 10, 20);
         doc.text(`Cliente: ${user.name} | ${user.email}`, 10, 30);
         doc.text(`Método de pago: ${metodo}`, 10, 40);

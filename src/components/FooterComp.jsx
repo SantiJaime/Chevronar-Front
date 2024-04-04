@@ -12,7 +12,7 @@ const FooterComp = () => {
             <div className="flex justify-center">
               <Link to={"/"} className="img-fluid">
                 <img
-                  src="/logo2.png"
+                  src="/logo2.webp"
                   alt="Chevronar Logo"
                   width="280px"
                   className="img-fluid"
@@ -32,7 +32,7 @@ const FooterComp = () => {
                 className="text-decoration-none text-white hover:bg-neutral-700 rounded-md p-2 transition"
                 to={"/contact"}
               >
-                <h5>Nuestras sucursales</h5>
+                <p className="font-bold fs-5 mb-2">Nuestras sucursales</p>
                 <ul className="m-0 p-0">
                   <li>Av. San Martín 112, Banda del Río Salí</li>
                   <li>Av. Colón 315, San Miguel de Tucumán</li>
@@ -40,7 +40,7 @@ const FooterComp = () => {
               </Link>
             ) : (
               <div className="d-block">
-                <h5>Nuestras sucursales</h5>
+                <p className="font-bold fs-5">Nuestras sucursales</p>
                 <ul>
                   <li>Av. San Martín 112, Banda del Río Salí</li>
                   <li>Av. Colón 315, San Miguel de Tucumán</li>
@@ -56,12 +56,13 @@ const FooterComp = () => {
             className="d-flex align-items-center justify-content-center"
           >
             <div>
-              <h5 className="text-center">Buscanos en nuestras redes</h5>
+              <p className="text-center font-bold fs-5 mb-2">Buscanos en nuestras redes</p>
               <div className="d-flex justify-content-center">
                 <a
                   className="mx-3"
                   href="https://www.facebook.com/chevronar.repuestosyaccesorios"
                   target="_blank"
+                  aria-label="Visita nuestra página de Facebook"
                 >
                   <i className="bi bi-facebook fs-1 fb"></i>
                 </a>
@@ -69,6 +70,7 @@ const FooterComp = () => {
                   className="mx-3"
                   href="https://wa.me/message/AQZNUQA6TEJVJ1"
                   target="_blank"
+                  aria-label="Envíanos un mensaje a través de nuestro Whatsapp"
                 >
                   <i className="bi bi-whatsapp fs-1 wp"></i>
                 </a>

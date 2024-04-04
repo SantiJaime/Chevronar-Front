@@ -1,16 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Carousel from "react-bootstrap/Carousel";
-import {
-  Button,
-  CarouselItem,
-  Col,
-  Container,
-  Row,
-  Spinner,
-} from "react-bootstrap";
+import { Button, Col, Container, Row, Spinner } from "react-bootstrap";
 import CardComp from "../components/CardComp";
 import clientAxios from "../utils/axiosClient";
-import { Link } from "react-router-dom";
 import { Typography } from "@material-tailwind/react";
 
 const Homepage = () => {
@@ -28,22 +20,22 @@ const Homepage = () => {
     getProducts();
   }, []);
 
+  const carouselImgs = [
+    "/slider1.webp",
+    "/slider2.webp",
+    "/slider3.webp",
+    "/slider4.webp",
+  ];
+
   const handleButton = () => setVerMas(!verMas);
   return (
     <>
       <Carousel data-bs-theme="dark" data-aos="zoom-in">
-        <Carousel.Item>
-          <img className="d-block carr" src="/slider1.jpg" alt="Slider 1" />
-        </Carousel.Item>
-        <Carousel.Item>
-          <img className="d-block carr" src="/slider2.jpg" alt="Slider 2" />
-        </Carousel.Item>
-        <Carousel.Item>
-          <img className="d-block carr" src="/slider3.jpg" alt="Slider 3" />
-        </Carousel.Item>
-        <Carousel.Item>
-          <img className="d-block carr" src="/slider4.jpg" alt="Slider 4" />
-        </Carousel.Item>
+        {carouselImgs.map((img, index) => (
+          <Carousel.Item key={index}>
+            <img className="d-block carr" src={img} alt={`Slider ${index + 1}`} />
+          </Carousel.Item>
+        ))}
       </Carousel>
       <Container fluid className="my-5 text-white">
         <Row className="justify-content-center">
@@ -100,18 +92,18 @@ const Homepage = () => {
                   </div>
                 </Col>
                 <Col sm={12} md={6} data-aos="fade-left" className="my-3">
-                    <img
-                      className="mx-auto img-fluid"
-                      src="/logo2_preview_rev_1.png"
-                      width={"550px"}
-                      alt="Tabla"
-                    />
+                  <img
+                    className="mx-auto img-fluid"
+                    src="/logo2_preview_rev_1.webp"
+                    width={"500px"}
+                    alt="Tabla"
+                  />
                 </Col>
               </Row>
             </section>
           </Col>
           <Col lg={12} md={12} sm={12}>
-            <h3>Productos destacados</h3>
+            <h2>Productos destacados</h2>
             <hr />
             {mostrarSpinner ? (
               <div className="text-center my-5">
