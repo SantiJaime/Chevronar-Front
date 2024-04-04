@@ -119,6 +119,7 @@ const OneProductPage = () => {
                 src={prod.imagen}
                 className="img-fluid rounded-4"
                 alt={`Chevronar | ${prod.nombre}`}
+                loading="lazy"
               />
             </Col>
             <Col lg={8} md={12} sm={12} className="my-3">

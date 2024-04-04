@@ -9,7 +9,20 @@ const Homepage = () => {
   const [productos, setProductos] = useState([]);
   const [mostrarSpinner, setMostrarSpinner] = useState(true);
   const [verMas, setVerMas] = useState(false);
+  const [height, setHeight] = useState("70vh");
 
+  useEffect(() => {
+    function handleResize() {
+      if (window.innerWidth <= 991) {
+        setHeight("50vh");
+      } else {
+        setHeight("70vh");
+      }
+    }
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
   const getProducts = async () => {
     try {
       const res = await clientAxios.get("/productos");
@@ -38,9 +51,13 @@ const Homepage = () => {
         {carouselImgs.map((img, index) => (
           <Carousel.Item key={index}>
             <img
-              className="w-full object-fill img-fluid"
               src={img}
+              style={{height: height, width: "100%"}}
+              className="object-cover"
+              height={"70px"}
+              width={"100%"}
               alt={`Slider ${index + 1}`}
+              loading="lazy"
             />
           </Carousel.Item>
         ))}
@@ -104,7 +121,9 @@ const Homepage = () => {
                     className="mx-auto img-fluid"
                     src="/logo2_preview_rev_1.webp"
                     width={"500px"}
-                    alt="Tabla"
+                    height={"auto"}
+                    alt="Logo Chevronar"
+                    loading="lazy"
                   />
                 </Col>
               </Row>

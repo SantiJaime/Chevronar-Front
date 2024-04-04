@@ -11,6 +11,7 @@ const ConfirmMailPage = () => {
           src="http://imgfz.com/i/xHVWvaE.png"
           alt="Confirmar mail"
           className="img-fluid rounded-5"
+          loading="lazy"
         />
       </Col>
     </Row>

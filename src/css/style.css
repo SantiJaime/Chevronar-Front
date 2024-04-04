@@ -46,11 +46,6 @@ footer {
   color: #0b6dee;
   transition: 300ms;
 }
-.carr {
-  object-fit: cover;
-  height: 70vh;
-  width: 100%;
-}
 .widthBuscador{
   width: 35%;
 }
@@ -98,9 +93,6 @@ footer {
     .margenNavLinks{
         margin-top: 10px;
         margin-bottom: 10px;
-    }
-    .carr {
-      height: 50vh
     }
     .widthBuscador{
       width: 50%;

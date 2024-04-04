@@ -15,6 +15,9 @@ const FooterComp = () => {
                   src="/logo2_preview_rev_1.webp"
                   alt="Chevronar Logo"
                   className="img-fluid"
+                  loading="lazy"
+                  width={"320px"}
+                  height={"auto"}
                 />
               </Link>
             </div>

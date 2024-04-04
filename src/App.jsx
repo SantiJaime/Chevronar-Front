@@ -8,10 +8,15 @@ import { useEffect } from "react";
 
 function App() {
   useEffect(() => {
-    import("aos").then((Aos) => {
-      Aos.init({ duration: 1800, once: true });
-    });
+    import("aos")
+      .then((Aos) => {
+        Aos.init({ duration: 1800, once: true });
+      })
+      .catch((error) => {
+        console.error("Error al cargar AOS:", error);
+      });
   }, []);
+  
 
   return (
     <Router>

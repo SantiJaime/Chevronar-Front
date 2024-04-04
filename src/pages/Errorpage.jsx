@@ -11,6 +11,7 @@ const Errorpage = () => {
           src="/Error-404.png"
           alt="Error"
           className="img-fluid rounded-5"
+          loading="lazy"
         />
       </Col>
     </Row>

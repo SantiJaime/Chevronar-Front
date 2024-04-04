@@ -53,6 +53,7 @@ const NavbarComp = () => {
 
   const handleClick = () => setMobileMenuOpen(!mobileMenuOpen);
   const toggleMenu = () => setMenuOpen(!menuOpen);
+
   const logOut = () => {
     sessionStorage.removeItem("token");
     sessionStorage.removeItem("role");
@@ -64,7 +65,7 @@ const NavbarComp = () => {
     <header>
       <nav
         className="flex items-center justify-between p-3 lg:px-8"
-        aria-label="Global"
+        aria-label="Navbar Chevronar"
       >
         <div className="flex lg:flex-1">
           <Link to={"/"}>
@@ -73,6 +74,8 @@ const NavbarComp = () => {
               src="/logo2_preview_rev_1.webp"
               alt="Logo Chevronar"
               width={"200px"}
+              height={"auto"}
+              loading="lazy"
             />
           </Link>
         </div>
@@ -234,7 +237,8 @@ const NavbarComp = () => {
                   <img
                     className="img-fluid"
                     src="/logo2.webp"
-                    alt="Logo JDB Devs"
+                    alt="Logo Chevronar"
+                    loading="lazy"
                   />
                 </Link>
                 <button
