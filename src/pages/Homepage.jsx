@@ -11,9 +11,13 @@ const Homepage = () => {
   const [verMas, setVerMas] = useState(false);
 
   const getProducts = async () => {
-    const res = await clientAxios.get("/productos");
-    setProductos(res.data.allProds);
-    setMostrarSpinner(false);
+    try {
+      const res = await clientAxios.get("/productos");
+      setProductos(res.data.allProds);
+      setMostrarSpinner(false);
+    } catch (error) {
+      console.log("Error al traer los productos", error);
+    }
   };
 
   useEffect(() => {
@@ -33,7 +37,11 @@ const Homepage = () => {
       <Carousel data-bs-theme="dark" data-aos="zoom-in">
         {carouselImgs.map((img, index) => (
           <Carousel.Item key={index}>
-            <img className="d-block carr" src={img} alt={`Slider ${index + 1}`} />
+            <img
+              className="w-full object-fill img-fluid "
+              src={img}
+              alt={`Slider ${index + 1}`}
+            />
           </Carousel.Item>
         ))}
       </Carousel>

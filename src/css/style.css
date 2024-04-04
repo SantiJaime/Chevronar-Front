@@ -1,7 +1,6 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
-
 .App {
   display: flex;
   flex-direction: column;
@@ -25,15 +24,6 @@ footer {
   text-align: center;
   color: aliceblue;
   width: 100%;
-}
-.whiteNavLink {
-  color: aliceblue;
-  text-decoration: none;
-  margin-right: 15px;
-}
-.whiteNavLink:hover {
-  color: rgb(170, 170, 170);
-  transition: 200ms;
 }
 .linkFooter {
   text-decoration: none;

@@ -10,11 +10,10 @@ const FooterComp = () => {
         <Row className="justify-content-center">
           <Col lg={4} md={6} sm={12} className="margenLogo">
             <div className="flex justify-center">
-              <Link to={"/"} className="img-fluid">
+              <Link to={"/"}>
                 <img
-                  src="/logo2.webp"
+                  src="/logo2_preview_rev_1.webp"
                   alt="Chevronar Logo"
-                  width="280px"
                   className="img-fluid"
                 />
               </Link>
@@ -29,7 +28,7 @@ const FooterComp = () => {
           >
             {role !== "admin" ? (
               <Link
-                className="text-decoration-none text-white hover:bg-neutral-700 rounded-md p-2 transition"
+                className="text-decoration-none text-white hover:bg-neutral-700 rounded-md p-2 transition mb-2"
                 to={"/contact"}
               >
                 <p className="font-bold fs-5 mb-2">Nuestras sucursales</p>

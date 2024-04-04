@@ -70,7 +70,7 @@ const NavbarComp = () => {
           <Link to={"/"}>
             <img
               className="img-fluid"
-              src="/logo2.webp"
+              src="/logo2_preview_rev_1.webp"
               alt="Logo Chevronar"
               width={"200px"}
             />

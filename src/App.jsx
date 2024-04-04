@@ -3,12 +3,14 @@ import RoutesView from "./routes/RoutesView";
 import FooterComp from "./components/FooterComp";
 import NavbarComp from "./components/NavbarComp";
 import "aos/dist/aos.css";
-import Aos from "aos";
 import { useEffect } from "react";
+
 
 function App() {
   useEffect(() => {
-    Aos.init({ duration: 1800, once: true });
+    import("aos").then((Aos) => {
+      Aos.init({ duration: 1800, once: true });
+    });
   }, []);
 
   return (
@@ -16,7 +18,7 @@ function App() {
       <div className="App">
         <NavbarComp />
         <main className="main-content">
-          <RoutesView />
+            <RoutesView />
         </main>
         <FooterComp />
       </div>
