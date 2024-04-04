@@ -81,9 +81,10 @@ const NavbarComp = () => {
             type="button"
             className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-400"
             onClick={() => setMobileMenuOpen(true)}
-            aria-labelledby="buttonIcon"
+            aria-label="Abrir menú"
           >
-            <Bars3Icon className="h-6 w-6" aria-hidden="true" id="buttonIcon" />
+            <span className="sr-only">Abrir menú</span>
+            <Bars3Icon className="h-6 w-6" aria-hidden="true" />
           </button>
         </div>
         <div className="hidden lg:flex lg:gap-x-12">
