@@ -54,8 +54,6 @@ const Homepage = () => {
               src={img}
               style={{height: height, width: "100%"}}
               className="object-cover"
-              height={"70px"}
-              width={"100%"}
               alt={`Slider ${index + 1}`}
               loading="lazy"
             />
