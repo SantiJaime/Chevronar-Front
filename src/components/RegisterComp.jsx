@@ -75,7 +75,7 @@ const RegisterComp = ({ type, getUsers, handleClose }) => {
         name: values.name,
         pass: values.pass,
         role: values.role,
-        status: "Verified"
+        status: "Verified",
       });
       if (res.status === 201) {
         Swal.fire({
@@ -99,7 +99,7 @@ const RegisterComp = ({ type, getUsers, handleClose }) => {
   };
 
   const handleViewPass = () => setViewPass(!viewPass);
-  const handleRepeatViewPass = () => setRepeatViewPass(!viewRepeatPass)
+  const handleRepeatViewPass = () => setRepeatViewPass(!viewRepeatPass);
   return (
     <>
       {
@@ -115,7 +115,10 @@ const RegisterComp = ({ type, getUsers, handleClose }) => {
             onSubmit={(values) => createUser(values)}
           >
             {({ values, errors, touched, handleChange, handleSubmit }) => (
-              <Form className="fondo p-3 w-75 rounded-3 sombra text-white" data-aos="zoom-out-up">
+              <Form
+                className="fondo p-3 w-75 rounded-3 sombra text-white"
+                data-aos="zoom-out-up"
+              >
                 <h3>Crea tu cuenta aquí</h3>
                 <hr />
                 <Form.Group className="mb-3" controlId="emailId">
@@ -170,11 +173,20 @@ const RegisterComp = ({ type, getUsers, handleClose }) => {
                       onChange={handleChange}
                       className={errors.pass && touched.pass && "is-invalid"}
                     />
-                    <Button variant="light" onClick={handleViewPass}>
-                      <i
-                        className={!viewPass ? "bi bi-eye-slash" : "bi bi-eye"}
-                      ></i>
-                    </Button>
+                    <InputGroup.Text id="groupPass">
+                      <button
+                        type="button"
+                        className="border-0 bg-transparent viewPassButton"
+                        onClick={handleViewPass}
+                        aria-label="viewPassButton"
+                      >
+                        <i
+                          className={
+                            !viewPass ? "bi bi-eye-slash" : "bi bi-eye"
+                          }
+                        ></i>
+                      </button>
+                    </InputGroup.Text>
                   </InputGroup>
                   <small className="text-danger">
                     {errors.pass && touched.pass && errors.pass}
@@ -196,11 +208,20 @@ const RegisterComp = ({ type, getUsers, handleClose }) => {
                         errors.repeatPass && touched.repeatPass && "is-invalid"
                       }
                     />
-                    <Button variant="light" onClick={handleRepeatViewPass}>
-                      <i
-                        className={!viewRepeatPass ? "bi bi-eye-slash" : "bi bi-eye"}
-                      ></i>
-                    </Button>
+                    <InputGroup.Text id="groupPass">
+                      <button
+                        type="button"
+                        className="border-0 bg-transparent viewPassButton"
+                        onClick={handleRepeatViewPass}
+                        aria-label="viewRepeatPassButton"
+                      >
+                        <i
+                          className={
+                            !viewRepeatPass ? "bi bi-eye-slash" : "bi bi-eye"
+                          }
+                        ></i>
+                      </button>
+                    </InputGroup.Text>
                   </InputGroup>
                   <small className="text-danger">
                     {errors.repeatPass &&
@@ -285,11 +306,20 @@ const RegisterComp = ({ type, getUsers, handleClose }) => {
                       onChange={handleChange}
                       className={errors.pass && touched.pass && "is-invalid"}
                     />
-                    <Button variant="light" onClick={handleViewPass}>
-                      <i
-                        className={!viewPass ? "bi bi-eye-slash" : "bi bi-eye"}
-                      ></i>
-                    </Button>
+                    <InputGroup.Text id="groupPass">
+                      <button
+                        type="button"
+                        className="border-0 bg-transparent viewPassButton"
+                        onClick={handleViewPass}
+                        aria-label="viewPassButton"
+                      >
+                        <i
+                          className={
+                            !viewPass ? "bi bi-eye-slash" : "bi bi-eye"
+                          }
+                        ></i>
+                      </button>
+                    </InputGroup.Text>
                   </InputGroup>
                   <small className="text-danger">
                     {errors.pass && touched.pass && errors.pass}
@@ -332,73 +362,6 @@ const RegisterComp = ({ type, getUsers, handleClose }) => {
         ) : (
           ""
         )
-        // type === "editUser" ? (
-        //     <Formik
-        //       initialValues={{
-        //         name: user.name,
-        //         role: user.role,
-        //       }}
-        //       validationSchema={errorEditUserSchema}
-        //       onSubmit={(values) => editUser(values)}
-        //     >
-        //       {({ values, errors, touched, handleChange, handleSubmit }) => (
-        //         <Form>
-        //           <Form.Group className="mb-3" controlId="nameId">
-        //             <Form.Label>Nombre y apellido</Form.Label>
-        //             <InputGroup className="mb-3">
-        //               <InputGroup.Text id="groupName">
-        //                 <i className="bi bi-person-circle"></i>
-        //               </InputGroup.Text>
-        //               <Form.Control
-        //                 placeholder="Ejemplo: Juan González"
-        //                 type="text"
-        //                 name="name"
-        //                 value={values.name}
-        //                 onChange={handleChange}
-        //                 className={errors.name && touched.name && "is-invalid"}
-        //               />
-        //             </InputGroup>
-        //             <small className="text-danger">
-        //               {errors.name && touched.name && errors.name}
-        //             </small>
-        //           </Form.Group>
-        //           <Form.Group className="mb-3" controlId="roleId">
-        //             <Form.Label>Rol</Form.Label>
-        //             <InputGroup className="mb-3">
-        //               <InputGroup.Text id="groupRole">
-        //                 <i className="bi bi-person-fill-gear"></i>
-        //               </InputGroup.Text>
-        //               <Form.Select
-        //                 name="role"
-        //                 value={values.role}
-        //                 onChange={handleChange}
-        //                 className={errors.role && touched.role && "is-invalid"}
-        //               >
-        //                 <option>Rol no seleccionado</option>
-        //                 <option value="user">Usuario</option>
-        //                 <option value="admin">Administrador</option>
-        //               </Form.Select>
-        //             </InputGroup>
-        //             <small className="text-danger">
-        //               {errors.role && touched.role && errors.role}
-        //             </small>
-        //           </Form.Group>
-        //           <hr />
-        //           <div className="text-end">
-        //             <button
-        //               className="btn botones"
-        //               type="submit"
-        //               onClick={handleSubmit}
-        //             >
-        //               Guardar cambios
-        //             </button>
-        //           </div>
-        //         </Form>
-        //       )}
-        //     </Formik>
-        //   ) : (
-        //     ""
-        //   )
       }
     </>
   );

@@ -81,6 +81,9 @@ footer {
 .widthButton{
   width: 120px;
 }
+.viewPassButton:hover {
+  color: rgb(21, 21, 214);
+}
 @media (min-width: 992px) {
   .displayNone {
     display: none;

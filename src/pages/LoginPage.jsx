@@ -88,29 +88,36 @@ const LoginPage = () => {
                 </small>
               </Form.Group>
               <Form.Group className="mb-3" controlId="passId">
-                  <Form.Label>Contraseña</Form.Label>
-                  <InputGroup className="mb-3">
-                    <InputGroup.Text id="groupPass">
-                      <i className="bi bi-key-fill"></i>
-                    </InputGroup.Text>
-                    <Form.Control
-                      placeholder="***********"
-                      type={!viewPass ? "password" : "text"}
-                      name="pass"
-                      value={values.pass}
-                      onChange={handleChange}
-                      className={errors.pass && touched.pass && "is-invalid"}
-                    />
-                    <Button variant="light" onClick={handleViewPass}>
+                <Form.Label>Contraseña</Form.Label>
+                <InputGroup className="mb-3">
+                  <InputGroup.Text id="groupPass">
+                    <i className="bi bi-key-fill"></i>
+                  </InputGroup.Text>
+                  <Form.Control
+                    placeholder="***********"
+                    type={!viewPass ? "password" : "text"}
+                    name="pass"
+                    value={values.pass}
+                    onChange={handleChange}
+                    className={errors.pass && touched.pass && "is-invalid"}
+                  />
+                  <InputGroup.Text id="groupPass">
+                    <button
+                      type="button"
+                      className="border-0 bg-transparent viewPassButton"
+                      onClick={handleViewPass}
+                      aria-label="viewPassButton"
+                    >
                       <i
                         className={!viewPass ? "bi bi-eye-slash" : "bi bi-eye"}
                       ></i>
-                    </Button>
-                  </InputGroup>
-                  <small className="text-danger">
-                    {errors.pass && touched.pass && errors.pass}
-                  </small>
-                </Form.Group>
+                    </button>
+                  </InputGroup.Text>
+                </InputGroup>
+                <small className="text-danger">
+                  {errors.pass && touched.pass && errors.pass}
+                </small>
+              </Form.Group>
               <hr />
               <div className="d-flex justify-content-between">
                 <Link to={"/register"} className="linkFooter">
@@ -125,9 +132,13 @@ const LoginPage = () => {
         </Formik>
       </div>
       <div className="text-center" data-aos="fade-up">
-      <hr />
-        <Link className="btn btn-outline-light fs-5" to={"/sendMailRecoveryPass"}>
-          <i className="bi bi-unlock"></i> ¿Olvidaste tu contraseña? Haz click aquí
+        <hr />
+        <Link
+          className="btn btn-outline-light fs-5"
+          to={"/sendMailRecoveryPass"}
+        >
+          <i className="bi bi-unlock"></i> ¿Olvidaste tu contraseña? Haz click
+          aquí
         </Link>
       </div>
     </Container>
